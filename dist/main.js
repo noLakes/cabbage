@@ -1,1 +1,1 @@
-(()=>{"use strict";const t=function(){let t={patches:[]};return{save(){localStorage.setItem("local_cabbage",JSON.stringify(t))},get_data:()=>t}}();console.log(t.get_data())})();
+(()=>{"use strict";const e=function(){let e={fields:[("General",{type:"field",name:"General",heads:[]})]};return{save(){localStorage.setItem("cabbage_db",JSON.stringify(e))},load(){localStorage.cabbage_db?e=JSON.parse(localStorage.cabbage_db):this.save()},fetch:()=>e}}();e.load(),console.table(e.fetch())})();

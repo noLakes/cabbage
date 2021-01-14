@@ -1,18 +1,30 @@
 import { Field, Head, Leaf } from './objects';
 
-const localDB = (function() {
-  let local_cabbage = {patches:[]};
+const data = (function() {
+  let cabbage_db = {fields:[Field('General')]};
 
   return {
 
     save() {
-      localStorage.setItem('local_cabbage', JSON.stringify(local_cabbage));
+      localStorage.setItem('cabbage_db', JSON.stringify(cabbage_db));
     },
 
-    get_data() {
-      return local_cabbage;
+    load() {
+      if(localStorage['cabbage_db']) {
+        cabbage_db = JSON.parse(localStorage['cabbage_db']);
+      } else {
+        this.save();
+      }
+    },
+
+    fetch() {
+      return cabbage_db;
     }
   }
 })()
 
-console.log(localDB.get_data());
+data.load();
+
+console.table(data.fetch());
+
+
