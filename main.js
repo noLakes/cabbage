@@ -1,0 +1,1 @@
+(()=>{"use strict";const t=function(){let t={patches:[]};return{save(){localStorage.setItem("local_cabbage",JSON.stringify(t))},get_data:()=>t}}();console.log(t.get_data())})();
