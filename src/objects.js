@@ -1,8 +1,15 @@
-function Project(name, info, due=false) {
+function Field(name) {
   return {
-    type : 'project',
-    headings : [],
-    tasks : [],
+    type : 'field',
+    name,
+    heads : [],
+  }
+}
+
+function Head(name, info, due=false) {
+  return {
+    type : 'head',
+    leaves : [],
     complete : false,
     name,
     info,
@@ -10,32 +17,13 @@ function Project(name, info, due=false) {
   }
 }
 
-function Heading(name, info) {
+function Leaf(name, due=false) {
   return {
-    type : 'heading',
-    tasks : [],
-    name,
-    info,
-  }
-}
-
-function Task(name, due=false) {
-  return {
-    type : 'task',
-    subs : [],
+    type : 'leaf',
     complete : false,
     name,
     due,
   }
 }
 
-function SubTask(name, due=false) {
-  return {
-    type : 'sub-task',
-    complete : false,
-    name,
-    due,
-  }
-}
-
-export { Project, Heading, Task, SubTask };
+export { Field, Head, Leaf };
