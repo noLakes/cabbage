@@ -1,15 +1,17 @@
 function Field(name) {
   return {
+    uid : null,
     type : 'field',
     name,
-    heads : [],
+    children : {},
   }
 }
 
 function Head(name, info, due=false) {
   return {
+    uid : null,
     type : 'head',
-    leaves : [],
+    children : {},
     complete : false,
     name,
     info,
@@ -19,6 +21,7 @@ function Head(name, info, due=false) {
 
 function Leaf(name, due=false) {
   return {
+    uid : null,
     type : 'leaf',
     complete : false,
     name,
