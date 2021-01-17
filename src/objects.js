@@ -3,7 +3,7 @@ function Field(name) {
     uid : null,
     type : 'field',
     name,
-    children : {},
+    children : new Map(),
   }
 }
 
@@ -11,7 +11,7 @@ function Head(name, info, due=false) {
   return {
     uid : null,
     type : 'head',
-    children : {},
+    children : new Map(),
     complete : false,
     name,
     info,

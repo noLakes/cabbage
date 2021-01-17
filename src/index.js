@@ -4,7 +4,7 @@ import { Field, Head, Leaf } from './objects';
 // to add: firebase / check local storage viable / setup function for page load
 const db = (function() {
   let cabbage_db = {
-    fields : {},
+    fields : new Map(),
     uids : {
       field : -1,
       head : -1,
@@ -27,7 +27,7 @@ const db = (function() {
       return String(cabbage_db['uids'][type]);
     },
 
-    merge_id(parent_uid, child_uid) {
+    merge_uid(parent_uid, child_uid) {
       return parent_uid.concat(`-${child_uid}`);
     },
 
@@ -36,35 +36,39 @@ const db = (function() {
         uid = this.parse_uid(uid);
       }
       if (uid.length === 0) return;
-      let result = cabbage_db.fields[uid.shift()];
+      let result = cabbage_db.fields.get(uid.shift());
+      //let result = cabbage_db.fields[uid.shift()];
       while(uid.length > 0) {
-        result = result['children'][uid.shift()];
+        result = result.children.get(uid.shift());
+        //result = result['children'][uid.shift()];
       }
       return result;
     },
 
     insert(parent, child) {
       const child_key = this.parse_uid(child.uid).pop();
-      parent.children[child_key] = child;
+      parent.children.set(child_key, child);
+      //parent.children[child_key] = child;
     },
 
     add_field(name) {
       const field = Field(name);
       field.uid = this.request_uid('field');
-      cabbage_db['fields'][this.parse_uid(field.uid)[0]] = field;
+      cabbage_db.fields.set(this.parse_uid(field.uid)[0], field);
+      //cabbage_db['fields'][this.parse_uid(field.uid)[0]] = field;
     },
 
     add_head(parent_uid, name, info, due) {
       const head = Head(name, info, due);
       const parent = this.fetch(parent_uid);
-      head.uid = this.merge_id(parent.uid, this.request_uid('head'));
+      head.uid = this.merge_uid(parent.uid, this.request_uid('head'));
       this.insert(parent, head);
     },
 
     add_leaf(parent_uid, name, due) {
       const leaf = Leaf(name, due);
       const parent = this.fetch(parent_uid);
-      leaf.uid = this.merge_id(parent.uid, this.request_uid('leaf'));
+      leaf.uid = this.merge_uid(parent.uid, this.request_uid('leaf'));
       this.insert(parent, leaf);
     },
 
@@ -76,7 +80,7 @@ const db = (function() {
       if(localStorage['cabbage_db']) {
         cabbage_db = JSON.parse(localStorage['cabbage_db']);
       } else {
-        this.save();
+        console.warn('could nont load cabbage db');
       }
     },
 
@@ -101,6 +105,7 @@ db.add_leaf('1-3', 'leaf 0', false);
 
 
 console.table(db.fetch_raw().fields);
+console.log(db.fetch_raw().fields.size);
 
 
 
