@@ -1,4 +1,4 @@
-import { Field, Head, Leaf } from './objects';
+import { Field, Head, Leaf, hasChildren } from './objects';
 
 // module for setting up and interacting with database
 // to add: firebase / check local storage viable / setup function for page load
