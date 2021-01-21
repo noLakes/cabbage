@@ -1,3 +1,4 @@
+import { Field, Head, Leaf, hasChildren } from './objects';
 
 // a basic library for global elements and reusable functions
 const elements = (function() {
