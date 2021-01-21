@@ -1,5 +1,4 @@
 import { Field, Head, Leaf, hasChildren } from './objects';
-import db from './data';
 
 // a basic library for global elements and reusable functions
 const elements = (function() {
@@ -13,7 +12,11 @@ const elements = (function() {
 
     basic(type, className=undefined, id=undefined) {
       const div = document.createElement(type);
-      if (className) div.classList.add(className);
+      if (className) {
+        className.split(',').forEach(cName => {
+          div.classList.add(cName);
+        });
+      } 
       if (id) div.id = id;
       return div;
     },
@@ -31,6 +34,17 @@ const render = (function() {
 
     head(head) {
       const container = elements.basic('div', 'head');
+      container.dataset.uid = head.uid;
+
+      const topContainer = elements.basic('div', 'top-container');
+      const heading = elements.basic('h3', 'title');
+      heading.innerHTML = head.name;
+      topContainer.appendChild(heading);
+
+      const contentContainer = elements.basic('div', 'content');
+
+      const childContainer = elements.basic('div', 'child-container,empty');
+
     },
 
     field() {
@@ -40,11 +54,4 @@ const render = (function() {
   }
 })()
 
-// a logic controller for the different ways you might want to render/show the content
-const controller = (function() {
-  return {
-
-  }
-})()
-
-export { elements, render, controller };
+export { elements, render, };
