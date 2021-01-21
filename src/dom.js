@@ -1,4 +1,5 @@
 import { Field, Head, Leaf, hasChildren } from './objects';
+import db from './data';
 
 // a basic library for global elements and reusable functions
 const elements = (function() {

@@ -1,6 +1,8 @@
 import db from './data';
 import { Field, Head, Leaf, hasChildren } from './objects';
-import { elements, render, controller } from './dom';
+import { elements, render,} from './dom';
+import controller from './controller';
+
 
 db.initialize();
 
