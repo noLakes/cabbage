@@ -29,22 +29,53 @@ const render = (function() {
   return {
 
     leaf(leaf) {
+      const leafContainer = elements.basic('div', 'leaf');
+      leafContainer.dataset.uid = leaf.uid;
 
+      const name = elements.basic('p', 'name');
+      name.innerHTML = leaf.name;
+      leafContainer.appendChild(name);
+
+      // add checkbox and due date/edit here
+
+      return leafContainer;
     },
 
-    head(head) {
-      const container = elements.basic('div', 'head');
-      container.dataset.uid = head.uid;
+    head(head, renderChildren=true) {
+      const headContainer = elements.basic('div', 'head');
+      headContainer.dataset.uid = head.uid;
 
       const topContainer = elements.basic('div', 'top-container');
       const heading = elements.basic('h3', 'title');
       heading.innerHTML = head.name;
       topContainer.appendChild(heading);
+      headContainer.appendChild(topContainer);
 
       const contentContainer = elements.basic('div', 'content');
 
-      const childContainer = elements.basic('div', 'child-container,empty');
+      const info = elements.basic('p', 'info');
+      info.innerHTML = head.info;
+      contentContainer.appendChild(info);
 
+      if(renderChildren) {
+        const childContainer = elements.basic('div', 'child-container');
+        if(hasChildren(head)) {
+          for(let child in head.children) {
+            const childLeaf = this.leaf(head.children[child]);
+            childContainer.appendChild(childLeaf);
+          }
+        }
+        contentContainer.appendChild(childContainer);
+      }
+
+      headContainer.appendChild(contentContainer);
+
+
+      const actionContainer = elements.basic('div', 'action-container');
+      // add date element, check box, and edit options here
+
+      headContainer.appendChild(actionContainer)
+      return headContainer;
     },
 
     field() {

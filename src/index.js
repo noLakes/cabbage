@@ -18,6 +18,9 @@ if(!db.fetch_raw().fields[0]) {
   db.add_leaf('1-3', 'leaf 0', false);
 }
 
+const testHead = db.fetch('1-3');
+elements.content.appendChild(render.head(testHead));
+
 
 
 
