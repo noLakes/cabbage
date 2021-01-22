@@ -70,6 +70,10 @@ const db = (function() {
     return result;
   }
 
+  const fetchFields = () => {
+    return cabbage_db.fields;
+  }
+
   const insert = (parent, child) => {
     const child_key = parse_uid(child.uid).pop();
     parent.children[child_key] = child;
@@ -118,6 +122,7 @@ const db = (function() {
     request_uid,
     merge_uid,
     fetch,
+    fetchFields,
     insert,
     add_field,
     add_head,
