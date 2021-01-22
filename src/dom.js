@@ -1,4 +1,5 @@
 import { Field, Head, Leaf, hasChildren } from './objects';
+import { format, } from 'date-fns'
 
 // a basic library for global elements and reusable functions
 const elements = (function() {
@@ -78,8 +79,10 @@ const render = (function() {
       return headContainer;
     },
 
-    field() {
-
+    fieldHeading(field, size='h2') {
+      const heading = elements.basic(size, 'field-heading');
+      heading.innerHTML = field.name;
+      return heading;
     },
 
   }
