@@ -85,6 +85,12 @@ const render = (function() {
       return heading;
     },
 
+    fieldNav(field) {
+      const link = elements.basic('a', 'field-link');
+      link.innerHTML = field.name;
+      return link;
+    },
+
   }
 })()
 
