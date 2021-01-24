@@ -86,12 +86,26 @@ select {
   border: 1px solid red;
 }
 
+.static-links, .field-links {
+  display: flex;
+  flex-direction: column;
+}
+
 .static-links {
 
 }
 
 .field-links {
 
+}
+
+.time-link, .field-link {
+  cursor: pointer;
+}
+
+.active {
+  color: blueviolet;
+  background-color: cadetblue;
 }
 
 .content-container {
