@@ -6,8 +6,8 @@ const elements = (function() {
   return {
     main : document.querySelector('.main-container'),
     nav : document.querySelector('.nav-container'),
-    static_links : document.querySelector('.static-links'),
-    field_links : document.querySelector('.field-links'),
+    static_links : document.querySelectorAll('.static-links a'),
+    field_links_container : document.querySelector('.field-links'),
     content : document.querySelector('.content-container'),
     footer : document.querySelector('.footer-container'),
 
@@ -87,6 +87,7 @@ const render = (function() {
 
     fieldNav(field) {
       const link = elements.basic('a', 'field-link');
+      link.dataset.uid = field.uid;
       link.innerHTML = field.name;
       return link;
     },
