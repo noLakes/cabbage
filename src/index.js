@@ -45,6 +45,8 @@ if(!db.fetch_raw().fields[0]) {
 
 controller.initFields();
 
+console.log(db.flatten());
+
 
 
 

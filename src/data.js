@@ -110,6 +110,20 @@ const db = (function() {
     save();
   }
 
+  const flatten = () => {
+    const flatDb = [];
+    for(const key in cabbage_db.fields) {
+      const heads = Object.values(cabbage_db.fields[key].children);
+      const leafs = [];
+      heads.forEach(h => {
+        leafs.push(Object.values(h.children));
+      })
+      flatDb.push(heads);
+      flatDb.push(leafs.flat());
+    }
+    return flatDb.flat();
+  }
+
   const dateCollect = (date) => {
     const results = [];
     //traverse fields, heads and leafs and collect each that match date query
@@ -137,6 +151,7 @@ const db = (function() {
     load,
     fetch_raw,
     initialize,
+    flatten,
   }
 })()
 
