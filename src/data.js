@@ -110,6 +110,11 @@ const db = (function() {
     save();
   }
 
+  const dateCollect = (date) => {
+    const results = [];
+    //traverse fields, heads and leafs and collect each that match date query
+  }
+
 
   //for testing
   const fetch_raw = () => {
