@@ -19,10 +19,8 @@ if(!db.fetch_raw().fields[0]) {
 }
 
 controller.initFields();
-console.log(elements.static_links);
 
-const testHead = db.fetch('1-3');
-elements.content.appendChild(render.head(testHead));
+
 
 
 
