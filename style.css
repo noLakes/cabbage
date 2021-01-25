@@ -109,6 +109,9 @@ select {
 }
 
 .content-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
   padding: 1rem;
   border: 1px solid red;
   background-color: rgb(114, 187, 138);
@@ -116,4 +119,16 @@ select {
 
 .footer-container {
 
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  max-width: 25%;
+  height: max-content;
+  margin: 0 1rem;
+  padding: 1rem;
+  background-color: chartreuse;
+  border: 1px solid yellowgreen;
+  border-radius: 15px;
 }
