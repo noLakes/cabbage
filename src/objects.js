@@ -7,7 +7,7 @@ function Field(name) {
   }
 }
 
-function Head(name, info, due=false) {
+function Head(name, info, due=undefined) {
   return {
     uid : null,
     type : 'head',
@@ -19,7 +19,7 @@ function Head(name, info, due=false) {
   }
 }
 
-function Leaf(name, due=false) {
+function Leaf(name, due=undefined) {
   return {
     uid : null,
     type : 'leaf',

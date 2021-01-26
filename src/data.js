@@ -1,5 +1,5 @@
 import { Field, Head, Leaf, hasChildren } from './objects';
-import { format, } from 'date-fns'
+import { format, parse } from 'date-fns'
 
 // module for setting up and interacting with database
 // to add: firebase / check local storage viable / setup function for page load
@@ -25,7 +25,6 @@ const db = (function() {
     if(localStorage['cabbage_db']) {
       cabbage_db = JSON.parse(localStorage['cabbage_db']);
       console.log('db loaded');
-      console.log(cabbage_db);
       return true;
     } else {
       return false;
@@ -37,7 +36,6 @@ const db = (function() {
       cabbage_db = newDb();
       save();
       console.log('new db initialized');
-      console.log(cabbage_db);
     }
   }
 
@@ -110,6 +108,14 @@ const db = (function() {
     save();
   }
 
+  /*
+  const dateTraverse = (date, obj, results=[]) => {
+    if(!hasChildren(obj) && date doesnt match) return results;
+    if(date does match)
+  }
+  */
+
+  // is this needed? mby remove and just flesh out dateColect?
   const flatten = () => {
     const flatDb = [];
     for(const key in cabbage_db.fields) {
@@ -124,9 +130,19 @@ const db = (function() {
     return flatDb.flat();
   }
 
+  const parseDate = (item) => {
+    if(!item.due) return;
+    return parse(item.due, 'MM/dd/yyyy/HH/mm', new Date());
+  }
+
+  const formatDate = (date) => {
+    return format(date, 'MM/dd/yyyy/HH/mm');
+  }
+
   const dateCollect = (date) => {
-    const results = [];
-    //traverse fields, heads and leafs and collect each that match date query
+    const data = flatten();
+    const results = data.filter(item => parseDate(item) < date );
+    return results;
   }
 
 
@@ -152,6 +168,9 @@ const db = (function() {
     fetch_raw,
     initialize,
     flatten,
+    formatDate,
+    parseDate,
+    dateCollect,
   }
 })()
 

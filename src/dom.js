@@ -1,5 +1,5 @@
 import { Field, Head, Leaf, hasChildren } from './objects';
-import { format, } from 'date-fns'
+import { format, parse, } from 'date-fns'
 
 // a basic library for global elements and reusable functions
 const elements = (function() {
@@ -73,8 +73,12 @@ const render = (function() {
 
 
       const actionContainer = elements.basic('div', 'action-container');
+      if(head.due) {
+        const due = elements.basic('p', 'due-date');
+        due.innerHTML = head.due;
+        actionContainer.appendChild(due);
+      }
       // add date element, check box, and edit options here
-
       headContainer.appendChild(actionContainer)
       return headContainer;
     },

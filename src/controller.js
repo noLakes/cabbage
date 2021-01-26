@@ -26,19 +26,35 @@ const controller = (function() {
       elements.content.appendChild(head);
     }
   }
+  
+  const loadBatch = (arr) => {
+    clearContent();
+    arr.forEach(item => {
+      let rendering = null;
+      if(item.type === 'head') {
+        rendering = render.head(item, false);
+      } else {
+        rendering = render.leaf(item);
+      }
+      if(rendering) elements.content.appendChild(rendering);
+    })
+  }
 
   // determines which selection of items to pool and load into the content window
   const loadHandler = (target) => {
     if(target.classList.contains('time-link')) {
       switch(target.id) {
-        case 'day':
-          console.log('load day');
+        case 'today':
+          const now = new Date();
+          const endOfDay = new Date(now.getFullYear()
+                                    ,now.getMonth()
+                                    ,now.getDate()
+                                    ,23,59,59);
+          loadBatch(db.dateCollect(endOfDay));
           break
-        case 'week':
-          console.log('load week');
-          break
-        case 'month':
-          console.log('load month');
+        case 'upcoming':
+          const twoWeeks = new Date(Date.now() + 12096e5);
+          loadBatch(db.dateCollect(twoWeeks));
           break
         default:
           console.log('load default');
