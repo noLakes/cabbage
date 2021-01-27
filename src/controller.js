@@ -64,7 +64,7 @@ const controller = (function() {
           break
         default:
           console.log('load default');
-          //load home?/all?
+          loadBatch(db.fetchHeadsByDue());
       }
     }
     else {

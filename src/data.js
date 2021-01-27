@@ -81,6 +81,19 @@ const db = (function() {
     return results.flat();
   }
 
+  const fetchHeadsByDue = () => {
+    const heads = fetchAllHeads();
+    return heads.sort((a, b) => {
+      if(a.due < b.due) {
+        return -1;
+      } else if(a.due > b.due) {
+        return 1;
+      } else {
+        return 0;
+      }
+    })
+  }
+
   const insert = (parent, child) => {
     const child_key = parse_uid(child.uid).pop();
     parent.children[child_key] = child;
@@ -156,7 +169,8 @@ const db = (function() {
     formatDate,
     parseDate,
     dateQuery,
-    fetchAllHeads
+    fetchAllHeads,
+    fetchHeadsByDue,
   }
 })()
 
