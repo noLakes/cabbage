@@ -72,6 +72,15 @@ const db = (function() {
     return cabbage_db.fields;
   }
 
+  const fetchAllHeads = () => {
+    const results = [];
+    for(const key in cabbage_db.fields) {
+      const heads = Object.values(cabbage_db.fields[key].children);
+      results.push(heads);
+    }
+    return results.flat();
+  }
+
   const insert = (parent, child) => {
     const child_key = parse_uid(child.uid).pop();
     parent.children[child_key] = child;
@@ -108,28 +117,6 @@ const db = (function() {
     save();
   }
 
-  /*
-  const dateTraverse = (date, obj, results=[]) => {
-    if(!hasChildren(obj) && date doesnt match) return results;
-    if(date does match)
-  }
-  */
-
-  // is this needed? mby remove and just flesh out dateColect?
-  const flatten = () => {
-    const flatDb = [];
-    for(const key in cabbage_db.fields) {
-      const heads = Object.values(cabbage_db.fields[key].children);
-      const leafs = [];
-      heads.forEach(h => {
-        leafs.push(Object.values(h.children));
-      })
-      flatDb.push(heads);
-      flatDb.push(leafs.flat());
-    }
-    return flatDb.flat();
-  }
-
   const parseDate = (head) => {
     if(!head.due) return;
     return parse(head.due, 'MM/dd/yyyy/HH/mm', new Date());
@@ -140,8 +127,7 @@ const db = (function() {
   }
 
   const dateQuery = (date) => {
-    const data = flatten();
-    const results = data.filter(item => parseDate(item) < date );
+    const results = fetchAllHeads().filter(head => parseDate(head) < date );
     return results;
   }
 
@@ -167,10 +153,10 @@ const db = (function() {
     load,
     fetch_raw,
     initialize,
-    flatten,
     formatDate,
     parseDate,
     dateQuery,
+    fetchAllHeads
   }
 })()
 

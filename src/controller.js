@@ -62,7 +62,6 @@ const controller = (function() {
       }
     }
     else {
-      console.log(`load field for ${target.dataset.uid}`);
       loadField(target.dataset.uid);
     }
   }
