@@ -32,7 +32,7 @@ const controller = (function() {
     arr.forEach(item => {
       let rendering = null;
       if(item.type === 'head') {
-        rendering = render.head(item, false);
+        rendering = render.head(item);
       } else {
         rendering = render.leaf(item);
       }
@@ -50,11 +50,11 @@ const controller = (function() {
                                     ,now.getMonth()
                                     ,now.getDate()
                                     ,23,59,59);
-          loadBatch(db.dateCollect(endOfDay));
+          loadBatch(db.dateQuery(endOfDay));
           break
         case 'upcoming':
           const twoWeeks = new Date(Date.now() + 12096e5);
-          loadBatch(db.dateCollect(twoWeeks));
+          loadBatch(db.dateQuery(twoWeeks));
           break
         default:
           console.log('load default');

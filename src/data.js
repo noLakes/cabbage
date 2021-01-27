@@ -92,8 +92,8 @@ const db = (function() {
     insert(parent, head);
   }
 
-  const add_leaf = (parent_uid, name, due) => {
-    const leaf = Leaf(name, due);
+  const add_leaf = (parent_uid, name) => {
+    const leaf = Leaf(name);
     const parent = fetch(parent_uid);
     leaf.uid = merge_uid(parent.uid, request_uid('leaf'));
     insert(parent, leaf);
@@ -130,16 +130,16 @@ const db = (function() {
     return flatDb.flat();
   }
 
-  const parseDate = (item) => {
-    if(!item.due) return;
-    return parse(item.due, 'MM/dd/yyyy/HH/mm', new Date());
+  const parseDate = (head) => {
+    if(!head.due) return;
+    return parse(head.due, 'MM/dd/yyyy/HH/mm', new Date());
   }
 
   const formatDate = (date) => {
     return format(date, 'MM/dd/yyyy/HH/mm');
   }
 
-  const dateCollect = (date) => {
+  const dateQuery = (date) => {
     const data = flatten();
     const results = data.filter(item => parseDate(item) < date );
     return results;
@@ -170,7 +170,7 @@ const db = (function() {
     flatten,
     formatDate,
     parseDate,
-    dateCollect,
+    dateQuery,
   }
 })()
 

@@ -19,13 +19,12 @@ function Head(name, info, due=undefined) {
   }
 }
 
-function Leaf(name, due=undefined) {
+function Leaf(name) {
   return {
     uid : null,
     type : 'leaf',
     complete : false,
     name,
-    due,
   }
 }
 
