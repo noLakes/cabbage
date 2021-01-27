@@ -40,25 +40,31 @@ const controller = (function() {
     })
   }
 
+  const endOfDay = () => {
+    const now = new Date();
+    return new Date(now.getFullYear()
+              ,now.getMonth()
+              ,now.getDate()
+              ,23,59,59);
+  }
+
+  const twoWeeks = () => {
+    return new Date(Number(endOfDay()) + 12096e5);
+  }
+
   // determines which selection of items to pool and load into the content window
   const loadHandler = (target) => {
     if(target.classList.contains('time-link')) {
       switch(target.id) {
         case 'today':
-          const now = new Date();
-          const endOfDay = new Date(now.getFullYear()
-                                    ,now.getMonth()
-                                    ,now.getDate()
-                                    ,23,59,59);
-          loadBatch(db.dateQuery(endOfDay));
+          loadBatch(db.dateQuery(endOfDay()));
           break
         case 'upcoming':
-          const twoWeeks = new Date(Date.now() + 12096e5);
-          loadBatch(db.dateQuery(twoWeeks));
+          loadBatch(db.dateQuery(twoWeeks()));
           break
         default:
           console.log('load default');
-          //load home?
+          //load home?/all?
       }
     }
     else {
