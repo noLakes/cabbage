@@ -106,23 +106,63 @@ const render = (function() {
 
       const name = elements.basic('input', 'field_name');
       name.type = 'text';
-      name.name = 'name';
-      name.value = 'New Field';
+      name.value = 'new field';
       form.appendChild(name);
 
       const submit = elements.basic('input', 'submit_field');
       submit.type = 'button';
+      submit.value = 'save';
       form.appendChild(submit);
 
       const cancel = elements.basic('input', 'cancel_field');
       cancel.type = 'button';
+      cancel.value = 'cancel';
       form.appendChild(cancel);
 
       return form;
     },
 
-    new_head_form() {
-      const container = elements.basic('div', '')
+    new_head_form(parent_uid) {
+      const container = elements.basic('div', 'new-head-container');
+
+      const new_head_init = elements.basic('a', 'new-head-init');
+      new_head_init.innerHTML = '+ new head';
+      container.appendChild(new_head_init);
+
+
+      const form_container = elements.basic('div', 'form-container');
+      form_container.style.display = 'none';
+
+      const form = elements.basic('form', 'new-head-form');
+      
+      const name = elements.basic('input', 'head-name');
+      name.type = 'text';
+      name.value = 'new head';
+      form.appendChild(name);
+
+      const info = elements.basic('input', 'head-info');
+      info.type = 'text';
+      info.value = 'info';
+      form.appendChild(info);
+
+      const due = elements.basic('input', 'head-due');
+      due.type = 'date';
+      form.appendChild(due);
+
+      const submit = elements.basic('input', 'submit-head');
+      submit.type = 'button';
+      submit.dataset.uid = parent_uid;
+      submit.value = 'save';
+      form.appendChild(submit);
+
+      const cancel = elements.basic('input', 'cancel-head');
+      cancel.type = 'button';
+      cancel.value = 'cancel';
+      form.appendChild(cancel);
+
+      form_container.appendChild(form);
+      container.appendChild(form_container);
+      return container;
     }
   }
 })()

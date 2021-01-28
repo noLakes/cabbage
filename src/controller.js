@@ -16,16 +16,6 @@ const controller = (function() {
   const clearContent = () => {
     elements.content.innerHTML = '';
   }
-
-  const loadField = (uid) => {
-    console.log(`asked to load field with uid -> ${uid}`);
-    clearContent();
-    const field = db.fetch(uid);
-    for(let key in field.children) {
-      const head = render.head(field.children[key]);
-      elements.content.appendChild(head);
-    }
-  }
   
   const loadBatch = (arr) => {
     clearContent();
@@ -50,34 +40,6 @@ const controller = (function() {
 
   const twoWeeks = () => {
     return new Date(Number(endOfDay()) + 12096e5);
-  }
-
-  // determines which selection of items to pool and load into the content window
-  const loadHandler = (target) => {
-    if(target.classList.contains('time-link')) {
-      switch(target.id) {
-        case 'today':
-          loadBatch(db.dateQuery(endOfDay()));
-          break
-        case 'upcoming':
-          loadBatch(db.dateQuery(twoWeeks()));
-          break
-        default:
-          console.log('load default');
-          loadBatch(db.fetchHeadsByDue());
-      }
-    }
-    else {
-      loadField(target.dataset.uid);
-    }
-  }
-
-  const activate = (e) => {
-    if(e.target.classList.contains('active')) return;
-    clearActive();
-    e.target.classList.add('active');
-    // load content here?
-    loadHandler(e.target);
   }
 
   const initFields = () => {
@@ -105,6 +67,70 @@ const controller = (function() {
     })
     
     elements.field_links_container.appendChild(form);
+    // refresh display here
+  }
+
+  const assign_head_form_listeners = (form) => {
+    form.querySelector('.new-head-init').addEventListener('click', (e) => {
+      e.target.style.display = 'none';
+      form.querySelector('.form-container').style.display = 'block';
+    })
+
+    form.querySelector('input.submit-head').addEventListener('click', (e) => {
+      db.add_head(
+        e.target.dataset.uid,
+        form.querySelector('.head-name').value,
+        form.querySelector('.head-info').value,
+        form.querySelector('.head-due').value || undefined,
+      )
+      form.querySelector('.form-container').style.display = 'none';
+      form.querySelector('.new-head-init').style.display = 'block';
+      //refresh display here
+    })
+
+    form.querySelector('.cancel-head').addEventListener('click', (e) => {
+      form.querySelector('.form-container').style.display = 'none';
+      form.querySelector('.new-head-init').style.display = 'block';
+    })
+  }
+
+  const loadField = (uid) => {
+    clearContent();
+    const field = db.fetch(uid);
+    for(let key in field.children) {
+      const head = render.head(field.children[key]);
+      elements.content.appendChild(head);
+    }
+    const new_head_form = render.new_head_form(uid);
+    assign_head_form_listeners(new_head_form);
+    elements.content.appendChild(new_head_form);
+  }
+
+  // determines which selection of items to pool and load into the content window
+  const loadHandler = (target) => {
+    if(target.classList.contains('time-link')) {
+      switch(target.id) {
+        case 'today':
+          loadBatch(db.dateQuery(endOfDay()));
+          break
+        case 'upcoming':
+          loadBatch(db.dateQuery(twoWeeks()));
+          break
+        default:
+          console.log('load default');
+          loadBatch(db.fetchHeadsByDue());
+      }
+    }
+    else {
+      loadField(target.dataset.uid);
+    }
+  }
+
+  const activate = (e) => {
+    if(e.target.classList.contains('active')) return;
+    clearActive();
+    e.target.classList.add('active');
+    loadHandler(e.target);
   }
 
   const initialize = () => {
@@ -118,7 +144,7 @@ const controller = (function() {
   })
 
   elements.new_field_button.addEventListener('click', (e) => {
-    open_field_form()
+    open_field_form();
     e.target.disabled = true;
   })
 
