@@ -89,12 +89,37 @@ const controller = (function() {
     }
   }
 
+  const open_field_form = () => {
+    const form = render.new_field_form();
+    
+    form.querySelector('input.submit_field').addEventListener('click', (e) => {
+      const name = form.querySelector('input.field_name').value;
+      db.add_field(name)
+      elements.new_field_button.disabled = false;
+      e.target.parentElement.remove();
+    })
+    
+    form.querySelector('input.cancel_field').addEventListener('click', (e) => {
+      elements.new_field_button.disabled = false;
+      e.target.parentElement.remove();
+    })
+    
+    elements.field_links_container.appendChild(form);
+  }
+
   const initialize = () => {
 
   }
 
+  // add event listeners to static items
+
   elements.static_links.forEach(link => {
     link.addEventListener("click", activate);
+  })
+
+  elements.new_field_button.addEventListener('click', (e) => {
+    open_field_form()
+    e.target.disabled = true;
   })
 
   return {

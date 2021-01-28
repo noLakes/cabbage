@@ -8,6 +8,7 @@ const elements = (function() {
     nav : document.querySelector('.nav-container'),
     static_links : document.querySelectorAll('.static-links a'),
     field_links_container : document.querySelector('.field-links'),
+    new_field_button : document.querySelector('button.new-field'),
     content : document.querySelector('.content-container'),
     footer : document.querySelector('.footer-container'),
 
@@ -96,6 +97,33 @@ const render = (function() {
       return link;
     },
 
+    modal_container() {
+      return elements.basic('div', 'modal-container');
+    },
+
+    new_field_form() {
+      const form = elements.basic('form');
+
+      const name = elements.basic('input', 'field_name');
+      name.type = 'text';
+      name.name = 'name';
+      name.value = 'New Field';
+      form.appendChild(name);
+
+      const submit = elements.basic('input', 'submit_field');
+      submit.type = 'button';
+      form.appendChild(submit);
+
+      const cancel = elements.basic('input', 'cancel_field');
+      cancel.type = 'button';
+      form.appendChild(cancel);
+
+      return form;
+    },
+
+    new_head_form() {
+      const container = elements.basic('div', '')
+    }
   }
 })()
 
