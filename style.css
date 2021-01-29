@@ -153,3 +153,8 @@ select {
   border: 1px solid yellowgreen;
   border-radius: 15px;
 }
+
+.head-tile:hover {
+  cursor: pointer;
+  background-color: rgb(18, 156, 0);
+}
