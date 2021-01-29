@@ -70,6 +70,10 @@ const render = (function() {
       return tile;
     },
 
+    head_modal(head) {
+      
+    }
+
     edit_field_form(field) {
       const container = elements.basic('div', 'field-heading-container');
       const form = elements.basic('form', 'edit-field');
@@ -134,6 +138,7 @@ const render = (function() {
       return form;
     },
 
+    //needs to look the same as a head tile
     new_head_form(parent_uid) {
       const container = elements.basic('div', 'new-head-container');
 
@@ -175,7 +180,8 @@ const render = (function() {
       form_container.appendChild(form);
       container.appendChild(form_container);
       return container;
-    }
+    },
+
   }
 })()
 
