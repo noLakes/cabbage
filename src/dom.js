@@ -1,4 +1,4 @@
-import { Field, Head, Leaf, childCount } from './objects';
+import { Field, Head, Leaf, childCount, childCompleteRatio } from './objects';
 import { format, parse, } from 'date-fns'
 
 // a basic library for global elements and reusable functions
@@ -44,7 +44,7 @@ const render = (function() {
     },
 
     head_tile(head) {
-      const tile = elements.basic('div', 'head-tile');
+      const tile = elements.basic('a', 'head-tile');
       
       const headingContainer = elements.basic('div', 'heading-container');
       const title = elements.basic('h3', 'title');
@@ -54,49 +54,20 @@ const render = (function() {
 
       const infoContainer = elements.basic('div', 'info-container');
 
+      if(childCount(head)) {
+        const listRatio = childCompleteRatio(head);
+        const listCounter = elements.basic('p', 'list-counter');
+        listCounter.innerHTML = `${listRatio[0]}/${listRatio[1]}`;
+        infoContainer.appendChild(listCounter);
+      }
+      if(head.due) {
+        const dueDate = elements.basic('p', 'due-date');
+        dueDate.innerHTML = head.due;
+        infoContainer.appendChild(dueDate);
+      }
+      tile.appendChild(infoContainer);
 
       return tile;
-    },
-
-    head(head, renderChildren=true) {
-      const headContainer = elements.basic('div', 'head');
-      headContainer.dataset.uid = head.uid;
-
-      const topContainer = elements.basic('div', 'top-container');
-      const heading = elements.basic('h3', 'title');
-      heading.innerHTML = head.name;
-      topContainer.appendChild(heading);
-      headContainer.appendChild(topContainer);
-
-      const contentContainer = elements.basic('div', 'content');
-
-      const info = elements.basic('p', 'info');
-      info.innerHTML = head.info;
-      contentContainer.appendChild(info);
-
-      if(renderChildren) {
-        const listContainer = elements.basic('div', 'list-container');
-        if(childCount(head)) {
-          for(let child in head.children) {
-            const childLeaf = this.leaf(head.children[child]);
-            listContainer.appendChild(childLeaf);
-          }
-        }
-        contentContainer.appendChild(listContainer);
-      }
-
-      headContainer.appendChild(contentContainer);
-
-
-      const actionContainer = elements.basic('div', 'action-container');
-      if(head.due) {
-        const due = elements.basic('p', 'due-date');
-        due.innerHTML = head.due;
-        actionContainer.appendChild(due);
-      }
-      // add date element, check box, and edit options here
-      headContainer.appendChild(actionContainer)
-      return headContainer;
     },
 
     edit_field_form(field) {

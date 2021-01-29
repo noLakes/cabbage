@@ -132,11 +132,11 @@ const db = (function() {
 
   const parseDate = (head) => {
     if(!head.due) return;
-    return parse(head.due, 'MM/dd/yyyy/HH/mm', new Date());
+    return parse(head.due, 'MM/dd/yyyy', new Date());
   }
 
   const formatDate = (date) => {
-    return format(date, 'MM/dd/yyyy/HH/mm');
+    return format(date, 'MM/dd/yyyy');
   }
 
   const dateQuery = (date) => {

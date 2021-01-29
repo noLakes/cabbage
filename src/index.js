@@ -10,7 +10,7 @@ db.initialize();
 // test data
 if(!db.fetch_raw().fields[0]) {
   db.add_field('General');
-    db.add_head('0', 'Get groceries', 'info', format(new Date(2021, 0, 26, 23, 55), 'MM/dd/yyyy/HH/mm'));
+    db.add_head('0', 'Get groceries', 'info', format(new Date(2021, 0, 26, 23, 55), 'MM/dd/yyyy'));
       db.add_leaf('0-0', 'milk');
       db.add_leaf('0-0', 'eggs');
       db.add_leaf('0-0', 'bread');
@@ -25,8 +25,8 @@ if(!db.fetch_raw().fields[0]) {
       db.add_leaf('0-0', 'mushrooms');
       db.add_leaf('0-0', 'paper towel');
       db.add_leaf('0-0', 'batteries');
-    db.add_head('0', 'Clean Shower', 'info', format(new Date(2021, 0, 26, 23, 55), 'MM/dd/yyyy/HH/mm'));
-    db.add_head('0', 'Sell Bike', 'info', format(new Date(2021, 1, 8, 12, 0), 'MM/dd/yyyy/HH/mm'));
+    db.add_head('0', 'Clean Shower', 'info', format(new Date(2021, 0, 26, 23, 55), 'MM/dd/yyyy'));
+    db.add_head('0', 'Sell Bike', 'info', format(new Date(2021, 1, 8, 12, 0), 'MM/dd/yyyy'));
       db.add_leaf('0-2', 'take pics');
       db.add_leaf('0-2', 'post add on kijiji');
 

@@ -22,7 +22,7 @@ const controller = (function() {
     arr.forEach(item => {
       let rendering = null;
       if(item.type === 'head') {
-        rendering = render.head(item);
+        rendering = render.head_tile(item);
       } else {
         rendering = render.leaf(item);
       }
@@ -141,7 +141,7 @@ const controller = (function() {
     const field = db.fetch(uid);
     loadFieldHeading(field);
     for(let key in field.children) {
-      const head = render.head(field.children[key]);
+      const head = render.head_tile(field.children[key]);
       elements.content.appendChild(head);
     }
     loadNewHeadForm(uid);
