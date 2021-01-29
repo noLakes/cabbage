@@ -60,14 +60,14 @@ const render = (function() {
       contentContainer.appendChild(info);
 
       if(renderChildren) {
-        const childContainer = elements.basic('div', 'child-container');
+        const listContainer = elements.basic('div', 'list-container');
         if(hasChildren(head)) {
           for(let child in head.children) {
             const childLeaf = this.leaf(head.children[child]);
-            childContainer.appendChild(childLeaf);
+            listContainer.appendChild(childLeaf);
           }
         }
-        contentContainer.appendChild(childContainer);
+        contentContainer.appendChild(listContainer);
       }
 
       headContainer.appendChild(contentContainer);
@@ -84,10 +84,40 @@ const render = (function() {
       return headContainer;
     },
 
+    edit_field_form(field) {
+      const container = elements.basic('div', 'field-heading-container');
+      const form = elements.basic('form', 'edit-field');
+      
+      const name = elements.basic('input', 'edit-field-name');
+      name.type = 'text';
+      name.value = field.name;
+      form.appendChild(name);
+
+      const submit = elements.basic('input', 'submit-edit');
+      submit.type = 'button';
+      submit.dataset.uid = field.uid;
+      submit.value = 'save';
+      form.appendChild(submit);
+
+      const cancel = elements.basic('input', 'cancel-edit');
+      cancel.type = 'button';
+      cancel.value = 'cancel';
+      form.appendChild(cancel);
+
+      container.appendChild(form);
+      return container;
+    },
+
     fieldHeading(field, size='h2') {
+      const container = elements.basic('div', 'field-heading-container');
       const heading = elements.basic(size, 'field-heading');
       heading.innerHTML = field.name;
-      return heading;
+      container.appendChild(heading);
+
+      const editButton = elements.basic('button', 'edit-field');
+      editButton.innerHTML = 'edit';
+      container.appendChild(editButton);
+      return container;
     },
 
     fieldNav(field) {
@@ -95,10 +125,6 @@ const render = (function() {
       link.dataset.uid = field.uid;
       link.innerHTML = field.name;
       return link;
-    },
-
-    modal_container() {
-      return elements.basic('div', 'modal-container');
     },
 
     new_field_form() {

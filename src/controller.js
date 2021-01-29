@@ -94,16 +94,44 @@ const controller = (function() {
     })
   }
 
+  const loadNewHeadForm = (uid) => {
+    const new_head_form = render.new_head_form(uid);
+    assign_head_form_listeners(new_head_form);
+    elements.content.appendChild(new_head_form);
+  }
+
+  const open_field_edit_form = (field) => {
+    const edit_form = render.edit_field_form(field);
+
+    edit_form.querySelector('.submit-edit').addEventListener('click', (e) => {
+      db.update_item(field.uid, {name : edit_form.querySelector('.edit-field-name').value});
+      //refresh here
+    })
+    edit_form.querySelector('.cancel-edit').addEventListener('click', (e) => {
+      loadField(field.uid);
+      //refesh content display?
+    })
+    elements.content.prepend(edit_form);
+  }
+
+  const loadFieldHeading = (field) => {
+    const fieldHeading = render.fieldHeading(field);
+    fieldHeading.querySelector('.edit-field').addEventListener('click', (e) => {
+      e.target.remove();
+      open_field_edit_form(field);
+    })
+    elements.content.prepend(fieldHeading);
+  }
+
   const loadField = (uid) => {
     clearContent();
     const field = db.fetch(uid);
+    loadFieldHeading(field);
     for(let key in field.children) {
       const head = render.head(field.children[key]);
       elements.content.appendChild(head);
     }
-    const new_head_form = render.new_head_form(uid);
-    assign_head_form_listeners(new_head_form);
-    elements.content.appendChild(new_head_form);
+    loadNewHeadForm(uid);
   }
 
   // determines which selection of items to pool and load into the content window
