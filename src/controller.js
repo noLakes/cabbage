@@ -16,19 +16,6 @@ const controller = (function() {
   const clearContent = () => {
     elements.content.innerHTML = '';
   }
-  
-  const loadBatch = (arr) => {
-    clearContent();
-    arr.forEach(item => {
-      let rendering = null;
-      if(item.type === 'head') {
-        rendering = render.head_tile(item);
-      } else {
-        rendering = render.leaf(item);
-      }
-      if(rendering) elements.content.appendChild(rendering);
-    })
-  }
 
   const endOfDay = () => {
     const now = new Date();
@@ -141,10 +128,43 @@ const controller = (function() {
     const field = db.fetch(uid);
     loadFieldHeading(field);
     for(let key in field.children) {
-      const head = render.head_tile(field.children[key]);
-      elements.content.appendChild(head);
+      loadHead(field.children[key]);
     }
     loadNewHeadForm(uid);
+  }
+
+  const toggle_modal = () => {
+    const modal = elements.modal;
+    if(modal.style.display === 'none') {
+      modal.style.display = 'block';
+    } else {
+      modal.style.display = 'none';
+    }
+  }
+
+  const open_head_modal = (head) => {
+    elements.modal.innerHTML = '';
+    elements.modal.appendChild(render.head_modal(head));
+    toggle_modal();
+  }
+
+  const loadHead = (head) => {
+    const tile = render.head_tile(head);
+    tile.addEventListener('click', (e) => {
+      open_head_modal(head);
+    })
+    elements.content.appendChild(tile);
+  }
+  
+  const loadBatch = (arr) => {
+    clearContent();
+    arr.forEach(item => {
+      if(item.type === 'head') {
+        loadHead(item);
+      } else {
+        elements.content.appendChild(render.leaf(item));
+      }
+    })
   }
 
   // determines which selection of items to pool and load into the content window
@@ -188,6 +208,12 @@ const controller = (function() {
     open_field_form();
     e.target.disabled = true;
   })
+
+  window.onclick = (e) => {
+    if (e.target == elements.modal) {
+      toggle_modal();
+    }
+  } 
 
   return {
     initFields,

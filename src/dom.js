@@ -11,6 +11,7 @@ const elements = (function() {
     new_field_button : document.querySelector('button.new-field'),
     content : document.querySelector('.content-container'),
     footer : document.querySelector('.footer-container'),
+    modal : document.querySelector('.modal'),
 
     basic(type, className=undefined, id=undefined) {
       const div = document.createElement(type);
@@ -71,8 +72,16 @@ const render = (function() {
     },
 
     head_modal(head) {
-      
-    }
+      const modal_content = elements.basic('div', 'modal-content');
+
+      const title = elements.basic('textarea', 'title');
+      title.innerHTML = head.name;
+      modal_content.appendChild(title);
+
+
+
+      return modal_content;
+    },
 
     edit_field_form(field) {
       const container = elements.basic('div', 'field-heading-container');
@@ -122,7 +131,7 @@ const render = (function() {
 
       const name = elements.basic('input', 'field_name');
       name.type = 'text';
-      name.value = 'new field';
+      name.placeholder = 'new project!';
       form.appendChild(name);
 
       const submit = elements.basic('input', 'submit_field');
@@ -154,12 +163,12 @@ const render = (function() {
       
       const name = elements.basic('input', 'head-name');
       name.type = 'text';
-      name.value = 'new head';
+      name.placeholder = 'new task!';
       form.appendChild(name);
 
       const info = elements.basic('input', 'head-info');
       info.type = 'text';
-      info.value = 'info';
+      info.placeholder = '>info here<';
       form.appendChild(info);
 
       const due = elements.basic('input', 'head-due');
