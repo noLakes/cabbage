@@ -1,5 +1,5 @@
 import db from './data';
-import { Field, Head, Leaf, hasChildren } from './objects';
+import { Field, Head, Leaf, childCount, childCompleteRatio } from './objects';
 import { elements, render,} from './dom';
 import controller from './controller';
 import { format, parse } from 'date-fns'

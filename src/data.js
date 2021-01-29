@@ -1,4 +1,4 @@
-import { Field, Head, Leaf, hasChildren } from './objects';
+import { Field, Head, Leaf, childCount } from './objects';
 import { format, parse } from 'date-fns'
 
 // module for setting up and interacting with database

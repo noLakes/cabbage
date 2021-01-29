@@ -28,15 +28,20 @@ function Leaf(name) {
   }
 }
 
-function hasChildren(object) {
-  if(!object || !object.children) return false;
+function childCount(object) {
+  if(!object || !object.children) return 0;
   const children = object.children;
 
-  for(let key in children) {
-    if(children.hasOwnProperty(key))
-        return true;
-  }
-  return false;
+  return Object.values(children).length;
 }
 
-export { Field, Head, Leaf, hasChildren };
+function childCompleteRatio(object) {
+  if(!object || !object.children) return [0, 0];
+  const children = Object.values(object.children);
+  const completed = children.filter(child => child.complete ).length;
+  const total = children.length;
+  return [completed, total];
+}
+
+
+export { Field, Head, Leaf, childCount, childCompleteRatio};

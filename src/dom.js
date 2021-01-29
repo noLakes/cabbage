@@ -1,4 +1,4 @@
-import { Field, Head, Leaf, hasChildren } from './objects';
+import { Field, Head, Leaf, childCount } from './objects';
 import { format, parse, } from 'date-fns'
 
 // a basic library for global elements and reusable functions
@@ -43,6 +43,21 @@ const render = (function() {
       return leafContainer;
     },
 
+    head_tile(head) {
+      const tile = elements.basic('div', 'head-tile');
+      
+      const headingContainer = elements.basic('div', 'heading-container');
+      const title = elements.basic('h3', 'title');
+      title.innerHTML = head.name;
+      headingContainer.appendChild(title);
+      tile.appendChild(headingContainer);
+
+      const infoContainer = elements.basic('div', 'info-container');
+
+
+      return tile;
+    },
+
     head(head, renderChildren=true) {
       const headContainer = elements.basic('div', 'head');
       headContainer.dataset.uid = head.uid;
@@ -61,7 +76,7 @@ const render = (function() {
 
       if(renderChildren) {
         const listContainer = elements.basic('div', 'list-container');
-        if(hasChildren(head)) {
+        if(childCount(head)) {
           for(let child in head.children) {
             const childLeaf = this.leaf(head.children[child]);
             listContainer.appendChild(childLeaf);

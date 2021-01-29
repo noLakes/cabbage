@@ -1,5 +1,5 @@
 import db from './data';
-import { Field, Head, Leaf, hasChildren } from './objects';
+import { Field, Head, Leaf, childCount } from './objects';
 import { elements, render,} from './dom';
 import { format, } from 'date-fns'
 
@@ -58,6 +58,12 @@ const controller = (function() {
     document.querySelector(`[data-uid='${activeUid}']`).classList.add('active');
   }
 
+  const reloadContent = () => {
+    clearContent();
+    const active = document.querySelector('.active');
+    loadHandler(active);
+  }
+
   const open_field_form = () => {
     const form = render.new_field_form();
     
@@ -92,7 +98,7 @@ const controller = (function() {
       )
       form.querySelector('.form-container').style.display = 'none';
       form.querySelector('.new-head-init').style.display = 'block';
-      //refresh display here
+      reloadContent();
     })
 
     form.querySelector('.cancel-head').addEventListener('click', (e) => {
