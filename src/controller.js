@@ -51,6 +51,13 @@ const controller = (function() {
     }
   }
 
+  const reloadFields = () => {
+    const activeUid = document.querySelector('.active').dataset.uid;
+    elements.field_links_container.innerHTML = '';
+    initFields();
+    document.querySelector(`[data-uid='${activeUid}']`).classList.add('active');
+  }
+
   const open_field_form = () => {
     const form = render.new_field_form();
     
@@ -59,6 +66,7 @@ const controller = (function() {
       db.add_field(name)
       elements.new_field_button.disabled = false;
       e.target.parentElement.remove();
+      reloadFields();
     })
     
     form.querySelector('input.cancel_field').addEventListener('click', (e) => {
@@ -67,7 +75,6 @@ const controller = (function() {
     })
     
     elements.field_links_container.appendChild(form);
-    // refresh display here
   }
 
   const assign_head_form_listeners = (form) => {
@@ -105,11 +112,11 @@ const controller = (function() {
 
     edit_form.querySelector('.submit-edit').addEventListener('click', (e) => {
       db.update_item(field.uid, {name : edit_form.querySelector('.edit-field-name').value});
-      //refresh here
+      reloadFields();
+      loadField(field.uid);
     })
     edit_form.querySelector('.cancel-edit').addEventListener('click', (e) => {
       loadField(field.uid);
-      //refesh content display?
     })
     elements.content.prepend(edit_form);
   }
@@ -117,7 +124,7 @@ const controller = (function() {
   const loadFieldHeading = (field) => {
     const fieldHeading = render.fieldHeading(field);
     fieldHeading.querySelector('.edit-field').addEventListener('click', (e) => {
-      e.target.remove();
+      e.target.parentElement.remove();
       open_field_edit_form(field);
     })
     elements.content.prepend(fieldHeading);
