@@ -7,7 +7,7 @@ function Field(name) {
   }
 }
 
-function Head(name, info, due=undefined) {
+function Head(name, info='', due=undefined) {
   return {
     uid : null,
     type : 'head',

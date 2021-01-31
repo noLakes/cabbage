@@ -135,8 +135,10 @@ const db = (function() {
     return parse(head.due, 'MM/dd/yyyy', new Date());
   }
 
-  const formatDate = (date) => {
-    return format(date, 'MM/dd/yyyy');
+  const formatDateBrowser = (head) => {
+    if(!head.due) return '';
+    const date = parseDate(head);
+    return format(date, 'yyyy/MM/dd').replace(/\//g,'-');
   }
 
   const dateQuery = (date) => {
@@ -166,11 +168,11 @@ const db = (function() {
     load,
     fetch_raw,
     initialize,
-    formatDate,
     parseDate,
     dateQuery,
     fetchAllHeads,
     fetchHeadsByDue,
+    formatDateBrowser,
   }
 })()
 

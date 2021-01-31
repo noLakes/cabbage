@@ -1,5 +1,6 @@
 import { Field, Head, Leaf, childCount, childCompleteRatio } from './objects';
 import { format, parse, } from 'date-fns'
+import db from './data';
 
 // a basic library for global elements and reusable functions
 const elements = (function() {
@@ -74,12 +75,72 @@ const render = (function() {
     head_modal(head) {
       const modal_content = elements.basic('div', 'modal-content');
 
-      const title = elements.basic('textarea', 'title');
-      title.innerHTML = head.name;
-      modal_content.appendChild(title);
+      const headerContainer = elements.basic('div', 'header-container');
+        const leftContainer = elements.basic('div', 'left');
+          const title = elements.basic('textarea', 'title');
+          title.innerHTML = head.name;
+          leftContainer.appendChild(title);
+          
+          const projectTag = elements.basic('p', 'project-tag');
+          projectTag.innerHTML = 'in project ';
+          const projectLink = elements.basic('a', 'project-link');
+          const spanWrapper = elements.basic('span');
+          projectLink.innerHTML = db.fetch(head.uid.split('-')[0]).name;
+          spanWrapper.appendChild(projectLink);
+          projectTag.appendChild(spanWrapper);
+          leftContainer.appendChild(projectTag);
+        headerContainer.appendChild(leftContainer);
+        
+        const rightContainer = elements.basic('div', 'right');
+          const complete = elements.basic('button', 'complete');
+          complete.innerHTML = 'complete';
+          rightContainer.appendChild(complete);
 
+          const del = elements.basic('button', 'delete');
+          del.innerHTML = 'delete';
+          rightContainer.appendChild(del);
+        headerContainer.appendChild(rightContainer);
 
+      modal_content.appendChild(headerContainer);
 
+      const dueContainer = elements.basic('div', 'due-container');
+      
+      const addDue = elements.basic('button', 'add-due');
+        addDue.innerHTML = '+ due date';
+        if(head.due) addDue.style.display = 'none';
+        addDue.addEventListener('click', (e) => {
+          e.target.style.display = 'none';
+          e.target.nextSibling.style.display = 'block';
+        })
+        dueContainer.appendChild(addDue);
+
+      const due = elements.basic('input', 'due-input');
+        if(!head.due) due.style.display = 'none'
+        due.type = 'date';
+        due.value = db.formatDateBrowser(head);
+        dueContainer.appendChild(due);
+      modal_content.appendChild(dueContainer);
+
+      const infoContainer = elements.basic('div', 'info-container');
+        const info = elements.basic('textarea', 'info');
+        info.value = head.info;
+        info.placeholder = 'add more information here...';
+        infoContainer.appendChild(info);
+      modal_content.appendChild(infoContainer);
+
+      const checkListContainer = elements.basic('div', 'checklist-container'); 
+        const checkList = elements.basic('div', 'checklist');
+        for(let key in head.children) {
+          checkList.appendChild(this.leaf(head.children[key]));
+        }
+
+        const addItem = elements.basic('button', 'add-item');
+        addItem.innerHTML = '+ item';
+        //addItem.addEventListener('click', (e) => )
+
+        checkListContainer.appendChild(checkList);
+        checkListContainer.appendChild(addItem);
+      modal_content.appendChild(checkListContainer);
       return modal_content;
     },
 
