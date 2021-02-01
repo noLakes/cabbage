@@ -1,5 +1,6 @@
 import db from './data';
 import { elements, render,} from './dom';
+import { format } from 'date-fns'
 
 // a logic controller for the different ways you might want to render/show the content
 // contains event listeners for interacting with DOM elements
@@ -129,9 +130,22 @@ const controller = (function() {
     loadNewHeadForm(uid);
   }
 
+  const update_head = () => {
+    db.update_item(
+      document.querySelector('.modal-content').dataset.uid,
+      {
+        name : document.querySelector('textarea.title').value,
+        info : document.querySelector('textarea.info').value,
+        due : format(new Date(document.querySelector('.due-input').valueAsNumber + 14400000), 'MM/dd/yyyy'),
+      }
+    )
+  }
+
   const toggle_modal = () => {
     const modal = document.querySelector('.modal');
     if(modal.style.display === 'block') {
+      update_head();
+      reloadContent();
       modal.style.display = 'none';
     } else {
       modal.style.display = 'block';

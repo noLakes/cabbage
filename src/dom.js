@@ -53,9 +53,7 @@ const render = (function() {
           } else {
             db.add_leaf(document.querySelector('.modal-content').dataset.uid, name.value);
             const head = db.fetch(document.querySelector('.modal-content').dataset.uid);
-            console.log(head);
             const newLeaf = Object.values(head.children).filter(i => i.name === name.value)[0];
-            console.log(newLeaf);
             container.parentElement.appendChild(this.leaf(newLeaf));
           }
           container.remove();

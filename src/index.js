@@ -48,6 +48,8 @@ if(!db.fetch_raw().fields[0]) {
 
 controller.initFields();
 
+//console.log(format('2021/10/01', 'MM/dd/yyyy'));
+
 
 
 
