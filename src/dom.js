@@ -32,6 +32,49 @@ const elements = (function() {
 const render = (function() {
   return {
 
+    leaf_form(edit=false) {
+      const container = elements.basic('div', 'leaf-form-container');
+        const form = elements.basic('form', 'leaf-form');
+        
+        const name = elements.basic('input', 'name-input');
+        name.placeholder = 'new task!';
+        if(edit) {
+          name.value = edit.name;
+          name.dataset.uid = edit.uid;
+        }
+
+        const save = elements.basic('button', 'save-leaf');
+        save.innerHTML = 'save';
+        save.addEventListener('click', () => {
+          if(edit) {
+            db.update_item(name.dataset.uid, {name : name.value});
+            container.nextSibling.querySelector('.name').innerHTML = name.value;
+            container.nextSibling.style.display = 'flex';
+          } else {
+            db.add_leaf(document.querySelector('.modal-content').dataset.uid, name.value);
+            const head = db.fetch(document.querySelector('.modal-content').dataset.uid);
+            console.log(head);
+            const newLeaf = Object.values(head.children).filter(i => i.name === name.value)[0];
+            console.log(newLeaf);
+            container.parentElement.appendChild(this.leaf(newLeaf));
+          }
+          container.remove();
+        })
+
+        const cancel = elements.basic('button', 'cancel-leaf');
+        cancel.innerHTML = 'cancel';
+        cancel.addEventListener('click', () => {
+          if(edit) container.nextSibling.style.display = 'flex';
+          container.remove();
+        })
+
+        form.appendChild(name);
+        form.appendChild(save);
+        form.appendChild(cancel);
+        container.appendChild(form);
+      return container;
+    },
+
     leaf(leaf) {
       const leafContainer = elements.basic('div', 'leaf');
       leafContainer.dataset.uid = leaf.uid;
@@ -51,15 +94,29 @@ const render = (function() {
       const actionContainer = elements.basic('div', 'action-container');
         const edit = elements.basic('button', 'edit-leaf');
         edit.innerHTML = 'edit';
+        edit.addEventListener('click', () => {
+          leafContainer.parentElement.insertBefore(this.leaf_form(leaf), leafContainer);
+          leafContainer.style.display = 'none';
+        })
+        
         const del = elements.basic('button', 'delete-leaf');
         del.innerHTML = 'delete';     
         del.addEventListener('click', () => {
           db.remove(leafContainer.dataset.uid);
           leafContainer.remove();
         })
+
         actionContainer.appendChild(edit);
         actionContainer.appendChild(del);
+      actionContainer.style.display = 'none';
       leafContainer.appendChild(actionContainer);
+
+      leafContainer.addEventListener('mouseenter', (e) => {
+        actionContainer.style.display = 'block';
+      })
+      leafContainer.addEventListener('mouseleave', (e) => {
+        actionContainer.style.display = 'none';
+      })
       return leafContainer;
     },
 
@@ -92,6 +149,7 @@ const render = (function() {
 
     head_modal(head) {
       const modal_content = elements.basic('div', 'modal-content');
+      modal_content.dataset.uid = head.uid;
 
       const headerContainer = elements.basic('div', 'header-container');
         const leftContainer = elements.basic('div', 'left');
@@ -154,7 +212,9 @@ const render = (function() {
 
         const addItem = elements.basic('button', 'add-item');
         addItem.innerHTML = '+ item';
-        //addItem.addEventListener('click', (e) => )
+        addItem.addEventListener('click', () => {
+          checkList.appendChild(this.leaf_form());
+        })
 
         checkListContainer.appendChild(checkList);
         checkListContainer.appendChild(addItem);
@@ -244,15 +304,6 @@ const render = (function() {
       name.type = 'text';
       name.placeholder = 'new task!';
       form.appendChild(name);
-
-      const info = elements.basic('input', 'head-info');
-      info.type = 'text';
-      info.placeholder = '>info here<';
-      form.appendChild(info);
-
-      const due = elements.basic('input', 'head-due');
-      due.type = 'date';
-      form.appendChild(due);
 
       const submit = elements.basic('input', 'submit-head');
       submit.type = 'button';

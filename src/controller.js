@@ -1,7 +1,5 @@
 import db from './data';
-import { Field, Head, Leaf, childCount } from './objects';
 import { elements, render,} from './dom';
-import { format, } from 'date-fns'
 
 // a logic controller for the different ways you might want to render/show the content
 // contains event listeners for interacting with DOM elements
@@ -80,8 +78,6 @@ const controller = (function() {
       db.add_head(
         e.target.dataset.uid,
         form.querySelector('.head-name').value,
-        form.querySelector('.head-info').value,
-        form.querySelector('.head-due').value || undefined,
       )
       form.querySelector('.form-container').style.display = 'none';
       form.querySelector('.new-head-init').style.display = 'block';
@@ -172,7 +168,6 @@ const controller = (function() {
           loadBatch(db.dateQuery(twoWeeks()));
           break
         default:
-          console.log('load default');
           loadBatch(db.fetchHeadsByDue());
       }
     }
