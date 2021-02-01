@@ -134,11 +134,11 @@ const controller = (function() {
   }
 
   const toggle_modal = () => {
-    const modal = elements.modal;
-    if(modal.style.display === 'none') {
-      modal.style.display = 'block';
-    } else {
+    const modal = document.querySelector('.modal');
+    if(modal.style.display === 'block') {
       modal.style.display = 'none';
+    } else {
+      modal.style.display = 'block';
     }
   }
 
@@ -150,7 +150,8 @@ const controller = (function() {
 
   const loadHead = (head) => {
     const tile = render.head_tile(head);
-    tile.addEventListener('click', (e) => {
+    tile.addEventListener('click', () => {
+      console.log('i was clicked');
       open_head_modal(head);
     })
     elements.content.appendChild(tile);
