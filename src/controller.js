@@ -158,13 +158,7 @@ const controller = (function() {
   
   const loadBatch = (arr) => {
     clearContent();
-    arr.forEach(item => {
-      if(item.type === 'head') {
-        loadHead(item);
-      } else {
-        elements.content.appendChild(render.leaf(item));
-      }
-    })
+    arr.forEach(item => loadHead(item));
   }
 
   // determines which selection of items to pool and load into the content window
