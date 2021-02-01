@@ -151,7 +151,6 @@ const controller = (function() {
   const loadHead = (head) => {
     const tile = render.head_tile(head);
     tile.addEventListener('click', () => {
-      console.log('i was clicked');
       open_head_modal(head);
     })
     elements.content.appendChild(tile);

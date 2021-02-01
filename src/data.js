@@ -1,8 +1,6 @@
 import { Field, Head, Leaf, childCount } from './objects';
 import { format, parse } from 'date-fns'
 
-// module for setting up and interacting with database
-// to add: firebase / check local storage viable / setup function for page load
 const db = (function() {
   let cabbage_db = null;
   
@@ -100,6 +98,18 @@ const db = (function() {
     save();
   }
 
+  const remove = (uid) => {
+    uid = parse_uid(uid);
+    const target = uid.pop();
+
+    if(uid.length < 1) {
+      delete cabbage_db.fields[target];
+    } else {
+      delete fetch(uid).children[target];
+    }
+    save();
+  }
+
   const add_field = (name) => {
     const field = Field(name);
     field.uid = request_uid('field');
@@ -173,6 +183,7 @@ const db = (function() {
     fetchAllHeads,
     fetchHeadsByDue,
     formatDateBrowser,
+    remove,
   }
 })()
 

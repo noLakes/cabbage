@@ -36,12 +36,30 @@ const render = (function() {
       const leafContainer = elements.basic('div', 'leaf');
       leafContainer.dataset.uid = leaf.uid;
 
+      const checkboxContainer = elements.basic('label', 'checkbox-container');
+        const checkBox = elements.basic('input', 'checkbox');
+        checkBox.type = 'checkbox';
+        const checkMark = elements.basic('span', 'checkmark');
+        checkboxContainer.appendChild(checkBox);
+        checkboxContainer.appendChild(checkMark);
+      leafContainer.appendChild(checkboxContainer);
+
       const name = elements.basic('p', 'name');
-      name.innerHTML = leaf.name;
+        name.innerHTML = leaf.name;
       leafContainer.appendChild(name);
 
-      // add checkbox and due date/edit here
-
+      const actionContainer = elements.basic('div', 'action-container');
+        const edit = elements.basic('button', 'edit-leaf');
+        edit.innerHTML = 'edit';
+        const del = elements.basic('button', 'delete-leaf');
+        del.innerHTML = 'delete';     
+        del.addEventListener('click', () => {
+          db.remove(leafContainer.dataset.uid);
+          leafContainer.remove();
+        })
+        actionContainer.appendChild(edit);
+        actionContainer.appendChild(del);
+      leafContainer.appendChild(actionContainer);
       return leafContainer;
     },
 

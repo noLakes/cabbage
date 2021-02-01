@@ -46,21 +46,6 @@ if(!db.fetch_raw().fields[0]) {
 
 controller.initFields();
 
-/*
-const date1 = new Date(2021, 9, 31, 12, 30);
-const date2 = new Date(2021, 10, 29, 12, 30);
-console.log(date1);
-console.log(date2);
-
-const d1 = format(date1, 'MM/dd/yyyy/HH/mm');
-const d2 = format(date2, 'MM/dd/yyyy/HH/mm');
-
-console.log(d1);
-console.log(d2);
-
-console.log(parse(d1, 'MM/dd/yyyy/HH/mm', new Date()));
-*/
-
 
 
 
