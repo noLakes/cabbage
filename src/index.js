@@ -46,9 +46,9 @@ if(!db.fetch_raw().fields[0]) {
       db.add_leaf('2-4', 'style');
 }
 
-controller.initFields();
+controller.initHome();
 
-//console.log(format('2021/10/01', 'MM/dd/yyyy'));
+console.log(parse('Jan/30', 'MMM/dd', new Date()));
 
 
 

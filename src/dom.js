@@ -118,6 +118,10 @@ const render = (function() {
       return leafContainer;
     },
 
+    heads_container() {
+      return elements.basic('div', 'heads-container');
+    },
+
     head_tile(head) {
       const tile = elements.basic('a', 'head-tile');
       
@@ -239,6 +243,11 @@ const render = (function() {
       cancel.type = 'button';
       cancel.value = 'cancel';
       form.appendChild(cancel);
+
+      const del = elements.basic('input', 'delete-field');
+      del.type = 'button';
+      del.value = 'delete';
+      form.appendChild(del);
 
       container.appendChild(form);
       return container;

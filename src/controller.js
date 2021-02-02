@@ -37,11 +37,22 @@ const controller = (function() {
     }
   }
 
-  const reloadFields = () => {
-    const activeUid = document.querySelector('.active').dataset.uid;
+  const initHome = () => {
     elements.field_links_container.innerHTML = '';
     initFields();
-    document.querySelector(`[data-uid='${activeUid}']`).classList.add('active');
+    clearContent();
+    const home = document.querySelector('.time-link#all');
+    home.classList.add('active');
+    loadHandler(home);
+  }
+
+  const reloadFields = () => {
+    const active = document.querySelector('.active');
+    elements.field_links_container.innerHTML = '';
+    initFields();
+    if(!active.classList.contains('time-link')) {
+      document.querySelector(`[data-uid='${active.dataset.uid}']`).classList.add('active');
+    }
   }
 
   const reloadContent = () => {
@@ -108,6 +119,13 @@ const controller = (function() {
     edit_form.querySelector('.cancel-edit').addEventListener('click', (e) => {
       loadField(field.uid);
     })
+    edit_form.querySelector('.delete-field').addEventListener('click', () => {
+      const answer = confirm(`Delete ${field.name}? This will delete all sub-tasks as well.`);
+      if(answer) {
+        db.remove(field.uid);
+        initHome();
+      }
+    })
     elements.content.prepend(edit_form);
   }
 
@@ -131,12 +149,19 @@ const controller = (function() {
   }
 
   const update_head = () => {
+    let dateValue = document.querySelector('.due-input').valueAsNumber;
+    if(isNaN(dateValue)) {
+      dateValue = '';
+    } else {
+      dateValue = format(new Date(dateValue + 14400000), 'MM/dd/yyyy');
+    }
+
     db.update_item(
       document.querySelector('.modal-content').dataset.uid,
       {
         name : document.querySelector('textarea.title').value,
         info : document.querySelector('textarea.info').value,
-        due : format(new Date(document.querySelector('.due-input').valueAsNumber + 14400000), 'MM/dd/yyyy'),
+        due : dateValue,
       }
     )
   }
@@ -197,10 +222,6 @@ const controller = (function() {
     loadHandler(e.target);
   }
 
-  const initialize = () => {
-
-  }
-
   // add event listeners to static items
 
   elements.static_links.forEach(link => {
@@ -220,6 +241,7 @@ const controller = (function() {
 
   return {
     initFields,
+    initHome,
   }
 })()
 
