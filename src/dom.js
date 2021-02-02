@@ -141,7 +141,7 @@ const render = (function() {
       }
       if(head.due) {
         const dueDate = elements.basic('p', 'due-date');
-        dueDate.innerHTML = head.due;
+        dueDate.innerHTML = format(head.due, 'MMM/dd');
         infoContainer.appendChild(dueDate);
       }
       tile.appendChild(infoContainer);
@@ -195,7 +195,7 @@ const render = (function() {
       const due = elements.basic('input', 'due-input');
         if(!head.due) due.style.display = 'none'
         due.type = 'date';
-        due.value = db.formatDateBrowser(head);
+        due.value = db.formatDateForPicker(head);
         dueContainer.appendChild(due);
       modal_content.appendChild(dueContainer);
 

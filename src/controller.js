@@ -151,11 +151,10 @@ const controller = (function() {
   const update_head = () => {
     let dateValue = document.querySelector('.due-input').valueAsNumber;
     if(isNaN(dateValue)) {
-      dateValue = '';
+      dateValue = 0;
     } else {
-      dateValue = format(new Date(dateValue + 14400000), 'MM/dd/yyyy');
+      dateValue = new Date(dateValue).getTime() + 18000000;
     }
-
     db.update_item(
       document.querySelector('.modal-content').dataset.uid,
       {

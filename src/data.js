@@ -142,13 +142,12 @@ const db = (function() {
 
   const parseDate = (head) => {
     if(!head.due) return;
-    return parse(head.due, 'MM/dd/yyyy', new Date());
+    return new Date(head.due);
   }
 
-  const formatDateBrowser = (head) => {
+  const formatDateForPicker = (head) => {
     if(!head.due) return '';
-    const date = parseDate(head);
-    return format(date, 'yyyy/MM/dd').replace(/\//g,'-');
+    return format(Number(head.due), 'yyyy/MM/dd').replace(/\//g, '-');
   }
 
   const dateQuery = (date) => {
@@ -182,7 +181,7 @@ const db = (function() {
     dateQuery,
     fetchAllHeads,
     fetchHeadsByDue,
-    formatDateBrowser,
+    formatDateForPicker,
     remove,
   }
 })()
