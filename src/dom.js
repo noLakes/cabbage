@@ -164,6 +164,7 @@ const render = (function() {
           const projectLink = elements.basic('a', 'project-link');
           const spanWrapper = elements.basic('span');
           projectLink.innerHTML = db.fetch(head.uid.split('-')[0]).name;
+          projectLink.dataset.uid = String(head.uid.split('-')[0]);
           spanWrapper.appendChild(projectLink);
           projectTag.appendChild(spanWrapper);
           leftContainer.appendChild(projectTag);

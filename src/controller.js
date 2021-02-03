@@ -179,12 +179,21 @@ const controller = (function() {
   const open_head_modal = (head) => {
     elements.modal.innerHTML = '';
     elements.modal.appendChild(render.head_modal(head));
+    
     elements.modal.querySelector('button.delete').addEventListener('click', () => {
       const answer = confirm(`Delete ${head.name}?`);
       if(answer) {
         db.remove(head.uid);
         toggle_modal(false);
       }
+    })
+
+    elements.modal.querySelector('.project-link').addEventListener('click', (e) => {
+      toggle_modal();
+      clearActive();
+      elements.field_links_container.querySelector(`[data-uid='${e.target.dataset.uid}']`).classList.add('active');
+      loadField(e.target.dataset.uid);
+
     })
     toggle_modal();
   }
