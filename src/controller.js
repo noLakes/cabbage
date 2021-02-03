@@ -165,10 +165,10 @@ const controller = (function() {
     )
   }
 
-  const toggle_modal = () => {
+  const toggle_modal = (update=true) => {
     const modal = document.querySelector('.modal');
     if(modal.style.display === 'block') {
-      update_head();
+      if(update) update_head();
       reloadContent();
       modal.style.display = 'none';
     } else {
@@ -179,6 +179,13 @@ const controller = (function() {
   const open_head_modal = (head) => {
     elements.modal.innerHTML = '';
     elements.modal.appendChild(render.head_modal(head));
+    elements.modal.querySelector('button.delete').addEventListener('click', () => {
+      const answer = confirm(`Delete ${head.name}?`);
+      if(answer) {
+        db.remove(head.uid);
+        toggle_modal(false);
+      }
+    })
     toggle_modal();
   }
 
