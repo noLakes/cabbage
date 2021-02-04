@@ -35,6 +35,8 @@ const controller = (function() {
   }
 
   const getDateStyle = (due) => {
+    due = Number(due);
+    if(due === 0) return false;
     if (due > startOfDay() && due < endOfDay()) {
       return 'due-today';
     } else if (due < startOfDay()) {
@@ -224,6 +226,7 @@ const controller = (function() {
     tile.addEventListener('click', () => {
       open_head_modal(head);
     })
+    console.log(head.due);
     if(getDateStyle(head.due)) {
       tile.querySelector('.due-date').classList.add(getDateStyle(head.due));
     }
