@@ -47,10 +47,3 @@ if(!db.fetch_raw().fields[0]) {
 }
 
 controller.initHome();
-
-/*
-console.log(parse('Jan/30', 'MMM/dd', new Date()));
-
-const date = new Date().getTime();
-console.log(format(date, 'MMM/dd'));
-*/

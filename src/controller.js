@@ -24,8 +24,25 @@ const controller = (function() {
               ,23,59,59);
   }
 
+  const startOfDay = () => {
+    const day = new Date()
+    day.setHours(0, 0, 0, 0);
+    return day;
+  }
+
   const twoWeeks = () => {
     return new Date(Number(endOfDay()) + 12096e5);
+  }
+
+  const getDateStyle = (due) => {
+    if (due > startOfDay() && due < endOfDay()) {
+      return 'due-today';
+    } else if (due < startOfDay()) {
+      return 'overdue';
+    } else if (due < new Date(startOfDay().getTime() + 604800000)) {
+      return 'soon';
+    }
+    return false;
   }
 
   const initFields = () => {
@@ -195,6 +212,10 @@ const controller = (function() {
       loadField(e.target.dataset.uid);
 
     })
+
+    if(getDateStyle(head.due)) {
+      elements.modal.querySelector('.due-input').classList.add(getDateStyle(head.due));
+    }
     toggle_modal();
   }
 
@@ -203,6 +224,9 @@ const controller = (function() {
     tile.addEventListener('click', () => {
       open_head_modal(head);
     })
+    if(getDateStyle(head.due)) {
+      tile.querySelector('.due-date').classList.add(getDateStyle(head.due));
+    }
     elements.content.appendChild(tile);
   }
   
