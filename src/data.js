@@ -81,7 +81,7 @@ const db = (function() {
 
   const fetchHeadsByDue = () => {
     const heads = fetchAllHeads();
-    return heads.sort((a, b) => {
+    const sort1 = heads.sort((a, b) => {
       if(a.due < b.due) {
         return -1;
       } else if(a.due > b.due) {
@@ -90,6 +90,7 @@ const db = (function() {
         return 0;
       }
     })
+    return [...sort1.filter(h => h.due), ...sort1.filter(h => !h.due)];
   }
 
   const insert = (parent, child) => {

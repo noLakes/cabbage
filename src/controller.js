@@ -85,10 +85,14 @@ const controller = (function() {
     
     form.querySelector('input.submit_field').addEventListener('click', (e) => {
       const name = form.querySelector('input.field_name').value;
-      db.add_field(name)
-      elements.new_field_button.disabled = false;
-      e.target.parentElement.remove();
-      reloadFields();
+      if(name.length > 0) {
+        db.add_field(name)
+        elements.new_field_button.disabled = false;
+        e.target.parentElement.remove();
+        reloadFields();
+      } else {
+        alert('Project name required.');
+      }
     })
     
     form.querySelector('input.cancel_field').addEventListener('click', (e) => {
@@ -106,13 +110,17 @@ const controller = (function() {
     })
 
     form.querySelector('input.submit-head').addEventListener('click', (e) => {
-      db.add_head(
-        e.target.dataset.uid,
-        form.querySelector('.head-name').value,
-      )
-      form.querySelector('.form-container').style.display = 'none';
-      form.querySelector('.new-head-init').style.display = 'block';
-      reloadContent();
+      if(form.querySelector('.head-name').value.length > 0) {
+        db.add_head(
+          e.target.dataset.uid,
+          form.querySelector('.head-name').value,
+        )
+        form.querySelector('.form-container').style.display = 'none';
+        form.querySelector('.new-head-init').style.display = 'block';
+        reloadContent();
+        } else {
+          alert('Task name required.');
+        }
     })
 
     form.querySelector('.cancel-head').addEventListener('click', (e) => {
@@ -168,6 +176,7 @@ const controller = (function() {
   }
 
   const update_head = () => {
+    const oldName = db.fetch(document.querySelector('.modal-content').dataset.uid).name
     let dateValue = document.querySelector('.due-input').valueAsNumber;
     if(isNaN(dateValue)) {
       dateValue = 0;
@@ -177,7 +186,7 @@ const controller = (function() {
     db.update_item(
       document.querySelector('.modal-content').dataset.uid,
       {
-        name : document.querySelector('textarea.title').value,
+        name : document.querySelector('textarea.title').value || oldName,
         info : document.querySelector('textarea.info').value,
         due : dateValue,
       }

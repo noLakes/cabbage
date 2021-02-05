@@ -149,7 +149,7 @@ const render = (function() {
       }
       if(head.due) {
         const dueDate = elements.basic('p', 'due-date');
-        dueDate.innerHTML = format(head.due, 'MMM/dd');
+        dueDate.innerHTML = format(head.due, 'MMM/dd').replace(/\//g, ' ');
         infoContainer.appendChild(dueDate);
       }
       tile.appendChild(infoContainer);
