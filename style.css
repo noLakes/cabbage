@@ -230,3 +230,7 @@ select {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 } 
+
+button.done {
+  background-color: rgb(54, 255, 47);
+} 
