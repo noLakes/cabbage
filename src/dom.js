@@ -180,7 +180,19 @@ const render = (function() {
         
         const rightContainer = elements.basic('div', 'right');
           const complete = elements.basic('button', 'complete');
+          if(head.complete) complete.classList.add('done');
           complete.innerHTML = 'complete';
+          
+          complete.addEventListener('click', (e) => {
+            if(e.target.classList.contains('done')) {
+              e.target.classList.remove('done');
+              db.update_item(head.uid, {complete : false});
+            } else {
+              e.target.classList.add('done');
+              db.update_item(head.uid, {complete : true});
+            }
+          })
+
           rightContainer.appendChild(complete);
 
           const del = elements.basic('button', 'delete');
