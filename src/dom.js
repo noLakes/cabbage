@@ -200,12 +200,24 @@ const render = (function() {
           e.target.nextSibling.style.display = 'block';
         })
         dueContainer.appendChild(addDue);
-
-      const due = elements.basic('input', 'due-input');
-        if(!head.due) due.style.display = 'none'
+      
+      const dueActions = elements.basic('div', 'due-controls');
+      if(!head.due) dueActions.style.display = 'none';
+        const due = elements.basic('input', 'due-input');
         due.type = 'date';
         due.value = db.formatDateForPicker(head);
-        dueContainer.appendChild(due);
+        dueActions.appendChild(due);
+
+        const removeDue = elements.basic('button', 'delete-due');
+        removeDue.innerHTML = 'remove';
+        removeDue.addEventListener('click', (e) => {
+          e.target.parentElement.style.display = 'none';
+          e.target.parentElement.previousSibling.style.display = 'block';
+          due.value = '';
+        })
+        dueActions.appendChild(removeDue);
+      dueContainer.appendChild(dueActions);
+      
       modal_content.appendChild(dueContainer);
 
       const infoContainer = elements.basic('div', 'info-container');
