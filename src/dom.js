@@ -80,9 +80,17 @@ const render = (function() {
       const checkboxContainer = elements.basic('label', 'checkbox-container');
         const checkBox = elements.basic('input', 'checkbox');
         checkBox.type = 'checkbox';
-        const checkMark = elements.basic('span', 'checkmark');
+        checkBox.checked = leaf.complete;
+        checkBox.addEventListener('change', (e) => {
+          if(e.target.checked) {
+            db.update_item(leaf.uid, {complete : true});
+          }else if(!e.target.checked) {
+            db.update_item(leaf.uid, {complete : false});
+          }
+        })
+        const checkmark = elements.basic('span', 'checkmark');
         checkboxContainer.appendChild(checkBox);
-        checkboxContainer.appendChild(checkMark);
+        checkboxContainer.appendChild(checkmark);
       leafContainer.appendChild(checkboxContainer);
 
       const name = elements.basic('p', 'name');
