@@ -234,7 +234,7 @@ const render = (function() {
 
       const infoContainer = elements.basic('div', 'info-container');
         const info = elements.basic('textarea', 'info');
-        info.value = task.info;
+        if(task.info) info.value = task.info;
         info.placeholder = 'add more information here...';
         infoContainer.appendChild(info);
       modal_content.appendChild(infoContainer);
