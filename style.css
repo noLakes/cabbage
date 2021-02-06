@@ -107,7 +107,7 @@ select {
   border: 1px solid red;
 }
 
-.static-links, .field-links {
+.static-links, .project-links {
   display: flex;
   flex-direction: column;
 }
@@ -116,11 +116,11 @@ select {
 
 }
 
-.field-links {
+.project-links {
 
 }
 
-.time-link, .field-link {
+.time-link, .project-link {
   cursor: pointer;
 }
 
@@ -142,7 +142,7 @@ select {
 
 }
 
-.head-tile {
+.task-tile {
   display: flex;
   flex-direction: column;
   max-width: 25%;
@@ -154,12 +154,12 @@ select {
   border-radius: 15px;
 }
 
-.head-tile:hover {
+.task-tile:hover {
   cursor: pointer;
   background-color: rgb(18, 156, 0);
 }
 
-.leaf {
+.check {
   display: flex;
 }
 
