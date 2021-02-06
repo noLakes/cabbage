@@ -47,28 +47,28 @@ const controller = (function() {
     return false;
   }
 
-  const initFields = () => {
-    const fields = db.fetchFields();
-    for(let key in fields) {
-      const fieldEl = render.fieldNav(fields[key]);
-      fieldEl.addEventListener("click", activate);
-      elements.field_links_container.appendChild(fieldEl);
+  const initProjects = () => {
+    const projects = db.fetchProjects();
+    for(let key in projects) {
+      const projectEl = render.projectNav(projects[key]);
+      projectEl.addEventListener("click", activate);
+      elements.project_links_container.appendChild(projectEl);
     }
   }
 
   const initHome = () => {
-    elements.field_links_container.innerHTML = '';
-    initFields();
+    elements.project_links_container.innerHTML = '';
+    initProjects();
     clearContent();
     const home = document.querySelector('.time-link#all');
     home.classList.add('active');
     loadHandler(home);
   }
 
-  const reloadFields = () => {
+  const reloadProjects = () => {
     const active = document.querySelector('.active');
-    elements.field_links_container.innerHTML = '';
-    initFields();
+    elements.project_links_container.innerHTML = '';
+    initProjects();
     if(!active.classList.contains('time-link')) {
       document.querySelector(`[data-uid='${active.dataset.uid}']`).classList.add('active');
     }
@@ -80,102 +80,102 @@ const controller = (function() {
     loadHandler(active);
   }
 
-  const open_field_form = () => {
-    const form = render.new_field_form();
+  const open_project_form = () => {
+    const form = render.new_project_form();
     
-    form.querySelector('input.submit_field').addEventListener('click', (e) => {
-      const name = form.querySelector('input.field_name').value;
+    form.querySelector('input.submit-project').addEventListener('click', (e) => {
+      const name = form.querySelector('input.project-name').value;
       if(name.length > 0) {
-        db.add_field(name)
-        elements.new_field_button.disabled = false;
+        db.add_project(name)
+        elements.new_project_button.disabled = false;
         e.target.parentElement.remove();
-        reloadFields();
+        reloadProjects();
       } else {
         alert('Project name required.');
       }
     })
     
-    form.querySelector('input.cancel_field').addEventListener('click', (e) => {
-      elements.new_field_button.disabled = false;
+    form.querySelector('input.cancel-project').addEventListener('click', (e) => {
+      elements.new_project_button.disabled = false;
       e.target.parentElement.remove();
     })
     
-    elements.field_links_container.appendChild(form);
+    elements.project_links_container.appendChild(form);
   }
 
-  const assign_head_form_listeners = (form) => {
-    form.querySelector('.new-head-init').addEventListener('click', (e) => {
+  const assign_task_form_listeners = (form) => {
+    form.querySelector('.new-task-init').addEventListener('click', (e) => {
       e.target.style.display = 'none';
       form.querySelector('.form-container').style.display = 'block';
     })
 
-    form.querySelector('input.submit-head').addEventListener('click', (e) => {
-      if(form.querySelector('.head-name').value.length > 0) {
-        db.add_head(
+    form.querySelector('input.submit-task').addEventListener('click', (e) => {
+      if(form.querySelector('.task-name').value.length > 0) {
+        db.add_task(
           e.target.dataset.uid,
-          form.querySelector('.head-name').value,
+          form.querySelector('.task-name').value,
         )
         form.querySelector('.form-container').style.display = 'none';
-        form.querySelector('.new-head-init').style.display = 'block';
+        form.querySelector('.new-task-init').style.display = 'block';
         reloadContent();
         } else {
           alert('Task name required.');
         }
     })
 
-    form.querySelector('.cancel-head').addEventListener('click', (e) => {
+    form.querySelector('.cancel-task').addEventListener('click', (e) => {
       form.querySelector('.form-container').style.display = 'none';
-      form.querySelector('.new-head-init').style.display = 'block';
+      form.querySelector('.new-task-init').style.display = 'block';
     })
   }
 
-  const loadNewHeadForm = (uid) => {
-    const new_head_form = render.new_head_form(uid);
-    assign_head_form_listeners(new_head_form);
-    elements.content.appendChild(new_head_form);
+  const loadNewTaskForm = (uid) => {
+    const new_task_form = render.new_task_form(uid);
+    assign_task_form_listeners(new_task_form);
+    elements.content.appendChild(new_task_form);
   }
 
-  const open_field_edit_form = (field) => {
-    const edit_form = render.edit_field_form(field);
+  const open_project_edit_form = (project) => {
+    const edit_form = render.edit_project_form(project);
 
     edit_form.querySelector('.submit-edit').addEventListener('click', (e) => {
-      db.update_item(field.uid, {name : edit_form.querySelector('.edit-field-name').value});
-      reloadFields();
-      loadField(field.uid);
+      db.update_item(project.uid, {name : edit_form.querySelector('.edit-project-name').value});
+      reloadProjects();
+      loadProject(project.uid);
     })
     edit_form.querySelector('.cancel-edit').addEventListener('click', (e) => {
-      loadField(field.uid);
+      loadProject(project.uid);
     })
-    edit_form.querySelector('.delete-field').addEventListener('click', () => {
-      const answer = confirm(`Delete ${field.name}? This will delete all sub-tasks as well.`);
+    edit_form.querySelector('.delete-project').addEventListener('click', () => {
+      const answer = confirm(`Delete ${project.name}? This will delete all sub-tasks as well.`);
       if(answer) {
-        db.remove(field.uid);
+        db.remove(project.uid);
         initHome();
       }
     })
     elements.content.prepend(edit_form);
   }
 
-  const loadFieldHeading = (field) => {
-    const fieldHeading = render.fieldHeading(field);
-    fieldHeading.querySelector('.edit-field').addEventListener('click', (e) => {
+  const loadProjectHeading = (project) => {
+    const projectHeading = render.projectHeading(project);
+    projectHeading.querySelector('.edit-project').addEventListener('click', (e) => {
       e.target.parentElement.remove();
-      open_field_edit_form(field);
+      open_project_edit_form(project);
     })
-    elements.content.prepend(fieldHeading);
+    elements.content.prepend(projectHeading);
   }
 
-  const loadField = (uid) => {
+  const loadProject = (uid) => {
     clearContent();
-    const field = db.fetch(uid);
-    loadFieldHeading(field);
-    for(let key in field.children) {
-      loadHead(field.children[key]);
+    const project = db.fetch(uid);
+    loadProjectHeading(project);
+    for(let key in project.children) {
+      loadTask(project.children[key]);
     }
-    loadNewHeadForm(uid);
+    loadNewTaskForm(uid);
   }
 
-  const update_head = () => {
+  const update_task = () => {
     const oldName = db.fetch(document.querySelector('.modal-content').dataset.uid).name
     let dateValue = document.querySelector('.due-input').valueAsNumber;
     if(isNaN(dateValue)) {
@@ -196,7 +196,7 @@ const controller = (function() {
   const toggle_modal = (update=true) => {
     const modal = document.querySelector('.modal');
     if(modal.style.display === 'block') {
-      if(update) update_head();
+      if(update) update_task();
       reloadContent();
       modal.style.display = 'none';
     } else {
@@ -204,14 +204,14 @@ const controller = (function() {
     }
   }
 
-  const open_head_modal = (head) => {
+  const open_task_modal = (task) => {
     elements.modal.innerHTML = '';
-    elements.modal.appendChild(render.head_modal(head));
+    elements.modal.appendChild(render.task_modal(task));
     
     elements.modal.querySelector('button.delete').addEventListener('click', () => {
-      const answer = confirm(`Delete ${head.name}?`);
+      const answer = confirm(`Delete ${task.name}?`);
       if(answer) {
-        db.remove(head.uid);
+        db.remove(task.uid);
         toggle_modal(false);
       }
     })
@@ -219,31 +219,31 @@ const controller = (function() {
     elements.modal.querySelector('.project-link').addEventListener('click', (e) => {
       toggle_modal();
       clearActive();
-      elements.field_links_container.querySelector(`[data-uid='${e.target.dataset.uid}']`).classList.add('active');
-      loadField(e.target.dataset.uid);
+      elements.project_links_container.querySelector(`[data-uid='${e.target.dataset.uid}']`).classList.add('active');
+      loadProject(e.target.dataset.uid);
 
     })
 
-    if(getDateStyle(head.due)) {
-      elements.modal.querySelector('.due-input').classList.add(getDateStyle(head.due));
+    if(getDateStyle(task.due)) {
+      elements.modal.querySelector('.due-input').classList.add(getDateStyle(task.due));
     }
     toggle_modal();
   }
 
-  const loadHead = (head) => {
-    const tile = render.head_tile(head);
+  const loadTask = (task) => {
+    const tile = render.task_tile(task);
     tile.addEventListener('click', () => {
-      open_head_modal(head);
+      open_task_modal(task);
     })
-    if(getDateStyle(head.due)) {
-      tile.querySelector('.due-date').classList.add(getDateStyle(head.due));
+    if(getDateStyle(task.due)) {
+      tile.querySelector('.due-date').classList.add(getDateStyle(task.due));
     }
     elements.content.appendChild(tile);
   }
   
   const loadBatch = (arr) => {
     clearContent();
-    arr.forEach(item => loadHead(item));
+    arr.forEach(item => loadTask(item));
   }
 
   // determines which selection of items to pool and load into the content window
@@ -257,11 +257,11 @@ const controller = (function() {
           loadBatch(db.dateQuery(twoWeeks()));
           break
         default:
-          loadBatch(db.fetchHeadsByDue());
+          loadBatch(db.fetchTasksByDue());
       }
     }
     else {
-      loadField(target.dataset.uid);
+      loadProject(target.dataset.uid);
     }
   }
 
@@ -278,8 +278,8 @@ const controller = (function() {
     link.addEventListener("click", activate);
   })
 
-  elements.new_field_button.addEventListener('click', (e) => {
-    open_field_form();
+  elements.new_project_button.addEventListener('click', (e) => {
+    open_project_form();
     e.target.disabled = true;
   })
 
@@ -290,7 +290,7 @@ const controller = (function() {
   } 
 
   return {
-    initFields,
+    initProjects,
     initHome,
   }
 })()

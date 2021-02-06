@@ -1,16 +1,16 @@
-function Field(name) {
+function Project(name) {
   return {
     uid : null,
-    type : 'field',
+    type : 'project',
     name,
     children : {},
   }
 }
 
-function Head(name, info='', due=0) {
+function Task(name, info='', due=0) {
   return {
     uid : null,
-    type : 'head',
+    type : 'task',
     children : {},
     complete : false,
     name,
@@ -19,10 +19,10 @@ function Head(name, info='', due=0) {
   }
 }
 
-function Leaf(name) {
+function Check(name) {
   return {
     uid : null,
-    type : 'leaf',
+    type : 'checkItem',
     complete : false,
     name,
   }
@@ -44,4 +44,4 @@ function childCompleteRatio(object) {
 }
 
 
-export { Field, Head, Leaf, childCount, childCompleteRatio};
+export { Project, Task, Check, childCount, childCompleteRatio};

@@ -1,4 +1,4 @@
-import { Field, Head, Leaf, childCount } from './objects';
+import { Project, Task, Check, childCount } from './objects';
 import { format, parse } from 'date-fns'
 
 const db = (function() {
@@ -6,11 +6,11 @@ const db = (function() {
   
   const newDb = () => {
     return {
-      fields : {},
+      projects : {},
       uids : {
-        field : -1,
-        head : -1,
-        leaf : -1,
+        project : -1,
+        task : -1,
+        check : -1,
       }
     }
   }
@@ -59,29 +59,29 @@ const db = (function() {
       uid = parse_uid(uid);
     }
     if (uid.length === 0) return;
-    let result = cabbage_db.fields[uid.shift()];
+    let result = cabbage_db.projects[uid.shift()];
     while(uid.length > 0) {
       result = result.children[uid.shift()];
     }
     return result;
   }
 
-  const fetchFields = () => {
-    return cabbage_db.fields;
+  const fetchProjects = () => {
+    return cabbage_db.projects;
   }
 
-  const fetchAllHeads = () => {
+  const fetchAllTasks = () => {
     const results = [];
-    for(const key in cabbage_db.fields) {
-      const heads = Object.values(cabbage_db.fields[key].children);
-      results.push(heads);
+    for(const key in cabbage_db.projects) {
+      const tasks = Object.values(cabbage_db.projects[key].children);
+      results.push(tasks);
     }
     return results.flat();
   }
 
-  const fetchHeadsByDue = () => {
-    const heads = fetchAllHeads();
-    const sort1 = heads.sort((a, b) => {
+  const fetchTasksByDue = () => {
+    const tasks = fetchAllTasks();
+    const sort1 = tasks.sort((a, b) => {
       if(a.due < b.due) {
         return -1;
       } else if(a.due > b.due) {
@@ -90,7 +90,7 @@ const db = (function() {
         return 0;
       }
     })
-    return [...sort1.filter(h => h.due), ...sort1.filter(h => !h.due)];
+    return [...sort1.filter(t => t.due), ...sort1.filter(t => !t.due)];
   }
 
   const insert = (parent, child) => {
@@ -104,32 +104,32 @@ const db = (function() {
     const target = uid.pop();
 
     if(uid.length < 1) {
-      delete cabbage_db.fields[target];
+      delete cabbage_db.projects[target];
     } else {
       delete fetch(uid).children[target];
     }
     save();
   }
 
-  const add_field = (name) => {
-    const field = Field(name);
-    field.uid = request_uid('field');
-    cabbage_db.fields[parse_uid(field.uid)[0]] = field;
+  const add_project = (name) => {
+    const project = Project(name);
+    project.uid = request_uid('project');
+    cabbage_db.projects[parse_uid(project.uid)[0]] = project;
     save();
   }
 
-  const add_head = (parent_uid, name, info, due) => {
-    const head = Head(name, info, due);
+  const add_task = (parent_uid, name, info, due) => {
+    const task = Project(name, info, due);
     const parent = fetch(parent_uid);
-    head.uid = merge_uid(parent.uid, request_uid('head'));
-    insert(parent, head);
+    task.uid = merge_uid(parent.uid, request_uid('task'));
+    insert(parent, task);
   }
 
-  const add_leaf = (parent_uid, name) => {
-    const leaf = Leaf(name);
+  const add_check = (parent_uid, name) => {
+    const check = Check(name);
     const parent = fetch(parent_uid);
-    leaf.uid = merge_uid(parent.uid, request_uid('leaf'));
-    insert(parent, leaf);
+    check.uid = merge_uid(parent.uid, request_uid('check'));
+    insert(parent, check);
   }
 
   // needs to be tested further once DOM event listeners begin calling it
@@ -141,18 +141,18 @@ const db = (function() {
     save();
   }
 
-  const parseDate = (head) => {
-    if(!head.due) return;
-    return new Date(head.due);
+  const parseDate = (task) => {
+    if(!task.due) return;
+    return new Date(task.due);
   }
 
-  const formatDateForPicker = (head) => {
-    if(!head.due) return '';
-    return format(Number(head.due), 'yyyy/MM/dd').replace(/\//g, '-');
+  const formatDateForPicker = (task) => {
+    if(!task.due) return '';
+    return format(Number(task.due), 'yyyy/MM/dd').replace(/\//g, '-');
   }
 
   const dateQuery = (date) => {
-    const results = fetchAllHeads().filter(head => parseDate(head) < date );
+    const results = fetchAllTasks().filter(task => parseDate(task) < date );
     return results;
   }
 
@@ -168,11 +168,11 @@ const db = (function() {
     request_uid,
     merge_uid,
     fetch,
-    fetchFields,
+    fetchProjects,
     insert,
-    add_field,
-    add_head,
-    add_leaf,
+    add_project,
+    add_task,
+    add_check,
     update_item,
     save,
     load,
@@ -180,8 +180,8 @@ const db = (function() {
     initialize,
     parseDate,
     dateQuery,
-    fetchAllHeads,
-    fetchHeadsByDue,
+    fetchAllTasks,
+    fetchTasksByDue,
     formatDateForPicker,
     remove,
   }
