@@ -1,6 +1,6 @@
 import db from './data';
 import { elements, render,} from './dom';
-import { format } from 'date-fns'
+import time from './time';
 
 // a logic controller for the different ways you might want to render/show the content
 // contains event listeners for interacting with DOM elements
@@ -14,37 +14,6 @@ const controller = (function() {
 
   const clearContent = () => {
     elements.content.innerHTML = '';
-  }
-
-  const endOfDay = () => {
-    const now = new Date();
-    return new Date(now.getFullYear()
-              ,now.getMonth()
-              ,now.getDate()
-              ,23,59,59);
-  }
-
-  const startOfDay = () => {
-    const day = new Date()
-    day.setHours(0, 0, 0, 0);
-    return day;
-  }
-
-  const twoWeeks = () => {
-    return new Date(Number(endOfDay()) + 12096e5);
-  }
-
-  const getDateStyle = (due) => {
-    due = Number(due);
-    if(due === 0) return false;
-    if (due > startOfDay() && due < endOfDay()) {
-      return 'due-today';
-    } else if (due < startOfDay()) {
-      return 'overdue';
-    } else if (due < new Date(startOfDay().getTime() + 604800000)) {
-      return 'soon';
-    }
-    return false;
   }
 
   const initProjects = () => {
@@ -224,8 +193,8 @@ const controller = (function() {
 
     })
 
-    if(getDateStyle(task.due)) {
-      elements.modal.querySelector('.due-input').classList.add(getDateStyle(task.due));
+    if(time.getDateStyle(task.due)) {
+      elements.modal.querySelector('.due-input').classList.add(time.getDateStyle(task.due));
     }
     toggle_modal();
   }
@@ -235,8 +204,8 @@ const controller = (function() {
     tile.addEventListener('click', () => {
       open_task_modal(task);
     })
-    if(getDateStyle(task.due)) {
-      tile.querySelector('.due-date').classList.add(getDateStyle(task.due));
+    if(time.getDateStyle(task.due)) {
+      tile.querySelector('.due-date').classList.add(time.getDateStyle(task.due));
     }
     elements.content.appendChild(tile);
   }
@@ -251,10 +220,10 @@ const controller = (function() {
     if(target.classList.contains('time-link')) {
       switch(target.id) {
         case 'today':
-          loadBatch(db.dateQuery(endOfDay()));
+          loadBatch(db.dateQuery(time.endOfDay()));
           break
         case 'upcoming':
-          loadBatch(db.dateQuery(twoWeeks()));
+          loadBatch(db.dateQuery(time.twoWeeks()));
           break
         default:
           loadBatch(db.fetchTasksByDue());
@@ -290,7 +259,6 @@ const controller = (function() {
   } 
 
   return {
-    initProjects,
     initHome,
   }
 })()

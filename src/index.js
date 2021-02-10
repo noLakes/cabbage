@@ -2,7 +2,6 @@ import db from './data';
 
 import { storageAvailable } from './storage';
 import controller from './controller';
-import { format, parse } from 'date-fns';
 
 
 if (storageAvailable('localStorage')) {

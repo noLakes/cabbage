@@ -1,5 +1,5 @@
 import { Project, Task, Check, childCount, childCompleteRatio } from './objects';
-import { format, parse, } from 'date-fns'
+import { format, } from 'date-fns'
 import db from './data';
 
 // a basic library for global elements and reusable functions

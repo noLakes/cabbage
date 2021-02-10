@@ -1,5 +1,5 @@
 import { Project, Task, Check, childCount } from './objects';
-import { format, parse } from 'date-fns'
+import { format, } from 'date-fns'
 
 const db = (function() {
   let cabbage_db = null;
