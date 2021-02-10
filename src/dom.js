@@ -361,6 +361,12 @@ const render = (function() {
       return container;
     },
 
+    nothing() {
+      const el = elements.basic('p', 'nothing');
+      el.innerHTML = 'there is nothing here right now';
+      return el;
+    },
+
   }
 })()
 
