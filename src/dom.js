@@ -24,7 +24,6 @@ const elements = (function() {
       if (id) div.id = id;
       return div;
     },
-
   }
 })()
 
@@ -132,6 +131,7 @@ const render = (function() {
 
     task_tile(task) {
       const tile = elements.basic('a', 'task-tile');
+      if(task.complete) tile.classList.add('complete');
       
       const taskingContainer = elements.basic('div', 'heading-container');
       const title = elements.basic('h3', 'title');
