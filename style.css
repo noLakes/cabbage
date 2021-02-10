@@ -70,6 +70,60 @@ select {
 }
 
 /* CSS Reset Ends */
+/*------------------------------------------------------------------*/
+
+@font-face {
+  font-family: 'Ubuntu-Light';
+  src: url('./fonts/Ubuntu-Light.ttf');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Ubuntu-LightItalic';
+  src: url('./fonts/Ubuntu-LightItalic.ttf');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('./fonts/Ubuntu-Regular.ttf');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Ubunut-Italic';
+  src: url('./fonts/Ubuntu-Italic.ttf');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Ubuntu-Medium';
+  src: url('./fonts/Ubuntu-Medium.ttf');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Ubuntu-MediumItalic';
+  src: url('./fonts/Ubuntu-MediumItalic.ttf');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Ubuntu-Bold';
+  src: url('./fonts/Ubuntu-Bold.ttf');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Ubuntu-BoldItalic';
+  src: url('./fonts/Ubuntu-BoldItalic.ttf');
+  font-weight: 700;
+}
+
+
+* {
+  font-family: Ubuntu, Helvetica, sans-serif, Arial;
+}
 
 .main-container {
   display: flex;
