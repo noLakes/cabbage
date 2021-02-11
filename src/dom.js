@@ -144,7 +144,8 @@ const render = (function() {
       if(childCount(task)) {
         const listRatio = childCompleteRatio(task);
         const listCounter = elements.basic('p', 'list-counter');
-        listCounter.innerHTML = `${listRatio[0]}/${listRatio[1]}`;
+        listCounter.appendChild(elements.basic('i','far,fa-check-square'))
+        listCounter.appendChild(document.createTextNode((`${listRatio[0]}/${listRatio[1]}`)));
         infoContainer.appendChild(listCounter);
       }
       if(task.due) {
