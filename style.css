@@ -120,6 +120,14 @@ select {
   font-weight: 700;
 }
 
+:root {
+  --darkGreen: #6F915C;
+  --lightGreen: #D4E8C0;
+  --blackOlive: #162411;
+  --opal: #A7C5BA;
+  --akaroa: #D5BFAA;
+}
+
 
 * {
   font-family: Ubuntu, Helvetica, sans-serif, Arial;
