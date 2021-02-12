@@ -101,7 +101,7 @@ const controller = (function() {
   const loadNewTaskForm = (uid) => {
     const new_task_form = render.new_task_form(uid);
     assign_task_form_listeners(new_task_form);
-    elements.content.appendChild(new_task_form);
+    document.querySelector('.tasks-container').appendChild(new_task_form);
   }
 
   const open_project_edit_form = (project) => {
@@ -134,10 +134,15 @@ const controller = (function() {
     elements.content.prepend(projectHeading);
   }
 
+  const loadTasksContainer = () => {
+    elements.content.appendChild(render.tasks_container());
+  }
+
   const loadProject = (uid) => {
     clearContent();
     const project = db.fetch(uid);
     loadProjectHeading(project);
+    loadTasksContainer();
     for(let key in project.children) {
       loadTask(project.children[key]);
     }
@@ -207,11 +212,12 @@ const controller = (function() {
     if(time.getDateStyle(task.due)) {
       tile.querySelector('.due-date').classList.add(time.getDateStyle(task.due));
     }
-    elements.content.appendChild(tile);
+    document.querySelector('.tasks-container').appendChild(tile);
   }
   
   const loadBatch = (arr) => {
     clearContent();
+    loadTasksContainer();
     arr.forEach(item => loadTask(item));
   }
 

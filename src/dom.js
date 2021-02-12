@@ -147,10 +147,13 @@ const render = (function() {
         listCounter.appendChild(elements.basic('i','far,fa-check-square'))
         listCounter.appendChild(document.createTextNode((`${listRatio[0]}/${listRatio[1]}`)));
         infoContainer.appendChild(listCounter);
+      } else {
+        infoContainer.appendChild(elements.basic('br'));
       }
       if(task.due) {
         const dueDate = elements.basic('p', 'due-date');
-        dueDate.innerHTML = format(task.due, 'MMM/dd').replace(/\//g, ' ');
+        dueDate.appendChild(elements.basic('i', 'far,fa-clock'));
+        dueDate.appendChild(document.createTextNode(format(task.due, 'MMM/dd').replace(/\//g, ' ')));
         infoContainer.appendChild(dueDate);
       }
       tile.appendChild(infoContainer);
