@@ -177,6 +177,7 @@ body {
   max-width: 200px;
   padding: 2rem 1rem;
   background-color: var(--p5);
+  font-size: 16px;
 }
 
 .logo {
@@ -189,6 +190,10 @@ body {
   display: flex;
   flex-direction: column;
   color: var(--p2);
+}
+
+.project-link {
+  margin-left: 1rem;
 }
 
 .projects-label {
@@ -219,18 +224,60 @@ body {
   cursor: pointer;
 }
 
-button.new-project {
+.time-link:not(.active):hover, .project-link:not(.active):hover {
+  color: var(--p0);
+}
+
+button.new-project, input[type=button] {
   border-radius: 5px;
   border: none;
-  background-color: #5e9681a5;
+  background-color: transparent; /*#5e9681a5*/
   color: var(--p2);
-  padding: 1px 5px;
+  padding: 0px 3px;
   width: max-content;
+}
+
+button.new-project {
+  margin-top: 0.5rem;
+}
+
+input[type=button] {
+  background-color: #5e9681a5;
+  margin-top: 5px;
+}
+
+input.submit-project {
+  margin-right: 5px;
+}
+
+button.new-project:hover, input[type=button]:hover {
+  cursor: pointer;
+  color: var(--p0);
+}
+
+input.project-name {
+  background-color: transparent;
+  color: var(--p2);
+  border: 1px solid var(--p4);
+  width: max-content;
+  max-width: 90%;
+  padding: 0px 5px;
+}
+
+input.project-name:focus {
+  outline: none;
+  border-color: var(--p1);
+  box-shadow: 0 0 3px var(--p1);
+
 }
 
 .active {
   color: var(--p1);
   padding-left: 1rem;
+}
+
+.project-link.active {
+  padding-left: 1.5rem;
 }
 
 .content-container {

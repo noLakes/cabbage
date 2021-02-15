@@ -29,7 +29,7 @@ const controller = (function() {
     elements.project_links_container.innerHTML = '';
     initProjects();
     clearContent();
-    const home = document.querySelector('.time-link#all');
+    const home = document.querySelector('.time-link#home');
     home.classList.add('active');
     loadHandler(home);
   }
@@ -56,7 +56,7 @@ const controller = (function() {
       const name = form.querySelector('input.project-name').value;
       if(name.length > 0) {
         db.add_project(name)
-        elements.new_project_button.disabled = false;
+        elements.new_project_button.style.display = 'block';
         e.target.parentElement.remove();
         reloadProjects();
       } else {
@@ -65,11 +65,12 @@ const controller = (function() {
     })
     
     form.querySelector('input.cancel-project').addEventListener('click', (e) => {
-      elements.new_project_button.disabled = false;
+      elements.new_project_button.style.display = 'block';
       e.target.parentElement.remove();
     })
     
     elements.project_links_container.appendChild(form);
+    document.querySelector('.nav-container .project-name').focus();
   }
 
   const assign_task_form_listeners = (form) => {
@@ -255,7 +256,7 @@ const controller = (function() {
 
   elements.new_project_button.addEventListener('click', (e) => {
     open_project_form();
-    e.target.disabled = true;
+    e.target.style.display = 'none';
   })
 
   window.onclick = (e) => {
