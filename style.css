@@ -173,8 +173,9 @@ body {
 .nav-container {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 200px;
+  width: 180px;
+  max-width: 180px;
+  min-width: 180px;
   padding: 2rem 1rem;
   background-color: var(--p5);
   font-size: 16px;
@@ -192,8 +193,14 @@ body {
   color: var(--p2);
 }
 
+.project-item {
+  list-style: disc;
+  margin-left: 1.2rem;
+  color: #a5d4ca4a;
+}
+
 .project-link {
-  margin-left: 1rem;
+  color: var(--p2);
 }
 
 .projects-label {
@@ -225,7 +232,7 @@ body {
 }
 
 .time-link:not(.active):hover, .project-link:not(.active):hover {
-  color: var(--p0);
+  color: var(--p1);
 }
 
 button.new-project, input[type=button] {
@@ -241,9 +248,12 @@ button.new-project {
   margin-top: 0.5rem;
 }
 
+.submit-project, .cancel-project {
+  margin-top: 5px;
+}
+
 input[type=button] {
   background-color: #5e9681a5;
-  margin-top: 5px;
 }
 
 input.submit-project {
@@ -252,7 +262,7 @@ input.submit-project {
 
 button.new-project:hover, input[type=button]:hover {
   cursor: pointer;
-  color: var(--p0);
+  color: var(--p1);
 }
 
 input.project-name {
@@ -261,6 +271,7 @@ input.project-name {
   border: 1px solid var(--p4);
   width: max-content;
   max-width: 90%;
+  margin-top: 5px;
   padding: 0px 5px;
 }
 
@@ -272,12 +283,7 @@ input.project-name:focus {
 }
 
 .active {
-  color: var(--p1);
-  padding-left: 1rem;
-}
-
-.project-link.active {
-  padding-left: 1.5rem;
+  color: var(--p0);
 }
 
 .content-container {
