@@ -10,6 +10,9 @@ const controller = (function() {
     document.querySelectorAll('.nav-container a').forEach(link => {
       link.classList.remove('active');
     })
+    document.querySelectorAll('.nav-container li').forEach(list => {
+      list.classList.remove('active');
+    })
   }
 
   const clearContent = () => {
@@ -245,6 +248,7 @@ const controller = (function() {
     if(e.target.classList.contains('active')) return;
     clearActive();
     e.target.classList.add('active');
+    e.target.parentElement.classList.add('active');
     loadHandler(e.target);
   }
 

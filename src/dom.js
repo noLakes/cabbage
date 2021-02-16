@@ -303,10 +303,12 @@ const render = (function() {
     },
 
     projectNav(project) {
+      const item = elements.basic('li', 'project-item');
       const link = elements.basic('a', 'project-link');
       link.dataset.uid = project.uid;
       link.innerHTML = project.name;
-      return link;
+      item.appendChild(link)
+      return item;
     },
 
     new_project_form() {
