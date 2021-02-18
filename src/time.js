@@ -14,8 +14,8 @@ const time = (function (){
     return day;
   }
 
-  const twoWeeks = () => {
-    return new Date(Number(endOfDay()) + 12096e5);
+  const oneWeek = () => {
+    return new Date(Number(endOfDay()) + 614800000);
   }
 
   const getDateStyle = (due) => {
@@ -25,7 +25,7 @@ const time = (function (){
       return 'due-today';
     } else if (due < startOfDay()) {
       return 'overdue';
-    } else if (due < new Date(startOfDay().getTime() + 604800000)) {
+    } else if (due < new Date(startOfDay().getTime() + 614800000)) {
       return 'soon';
     }
     return false;
@@ -34,7 +34,7 @@ const time = (function (){
   return {
     endOfDay,
     startOfDay,
-    twoWeeks,
+    oneWeek,
     getDateStyle,
   }
 })()

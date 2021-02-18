@@ -120,14 +120,16 @@ const controller = (function() {
         initHome();
       }
     })
-    elements.content.prepend(edit_form);
+    elements.content.querySelector('.project-heading-container').prepend(edit_form);
+    document.querySelector('input.edit-project-name').focus();
   }
 
   const loadProjectHeading = (project) => {
     const projectHeading = render.projectHeading(project);
     
     projectHeading.querySelector('.edit-project').addEventListener('click', (e) => {
-      e.target.parentElement.remove();
+      document.querySelector('.project-heading').remove();
+      e.target.remove();
       open_project_edit_form(project);
     })
     projectHeading.querySelector('.new-task-button').addEventListener('click', (e) => {
@@ -201,7 +203,7 @@ const controller = (function() {
 
     })
 
-    if(time.getDateStyle(task.due)) {
+    if(time.getDateStyle(task.due) && !task.complete) {
       elements.modal.querySelector('.due-input').classList.add(time.getDateStyle(task.due));
     }
     toggle_modal();
@@ -212,16 +214,22 @@ const controller = (function() {
     tile.addEventListener('click', () => {
       open_task_modal(task);
     })
-    if(time.getDateStyle(task.due)) {
+    if(time.getDateStyle(task.due) && !task.complete) {
       tile.querySelector('.due-date').classList.add(time.getDateStyle(task.due));
     }
     document.querySelector('.tasks-container').appendChild(tile);
   }
   
-  const loadBatch = (arr) => {
+  const loadBatch = (arr, loadComplete=true) => {
     clearContent();
     loadTasksContainer();
-    arr.forEach(item => loadTask(item));
+    arr.forEach(item => {
+      if(!loadComplete && item.complete) {
+        return;
+      } else {
+        loadTask(item);
+      }
+    });
   }
 
   // determines which selection of items to pool and load into the content window
@@ -229,10 +237,10 @@ const controller = (function() {
     if(target.classList.contains('time-link')) {
       switch(target.id) {
         case 'today':
-          loadBatch(db.dateQuery(time.endOfDay()));
+          loadBatch(db.dateQuery(time.endOfDay()), false);
           break
         case 'upcoming':
-          loadBatch(db.dateQuery(time.twoWeeks()));
+          loadBatch(db.dateQuery(time.oneWeek()), false);
           break
         default:
           loadBatch(db.fetchTasksByDue());

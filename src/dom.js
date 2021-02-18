@@ -133,14 +133,20 @@ const render = (function() {
       const tile = elements.basic('a', 'task-tile');
       if(task.complete) tile.classList.add('complete');
       
-      const taskingContainer = elements.basic('div', 'heading-container');
+      const headingContainer = elements.basic('div', 'heading-container');
       const title = elements.basic('h3', 'title');
       title.innerHTML = task.name;
-      taskingContainer.appendChild(title);
-      tile.appendChild(taskingContainer);
+      headingContainer.appendChild(title);
+      tile.appendChild(headingContainer);
 
       const infoContainer = elements.basic('div', 'info-container');
 
+      if(task.due) {
+        const dueDate = elements.basic('p', 'due-date');
+        dueDate.appendChild(elements.basic('i', 'far,fa-clock'));
+        dueDate.appendChild(document.createTextNode(format(task.due, 'MMM/dd').replace(/\//g, ' ')));
+        infoContainer.appendChild(dueDate);
+      }
       if(childCount(task)) {
         const listRatio = childCompleteRatio(task);
         const listCounter = elements.basic('p', 'list-counter');
@@ -148,14 +154,6 @@ const render = (function() {
         listCounter.appendChild(document.createTextNode((`${listRatio[0]}/${listRatio[1]}`)));
         if(listRatio[0] === listRatio[1]) listCounter.classList.add('tasks-complete');
         infoContainer.appendChild(listCounter);
-      } else {
-        infoContainer.appendChild(elements.basic('br'));
-      }
-      if(task.due) {
-        const dueDate = elements.basic('p', 'due-date');
-        dueDate.appendChild(elements.basic('i', 'far,fa-clock'));
-        dueDate.appendChild(document.createTextNode(format(task.due, 'MMM/dd').replace(/\//g, ' ')));
-        infoContainer.appendChild(dueDate);
       }
       tile.appendChild(infoContainer);
 
@@ -266,7 +264,7 @@ const render = (function() {
       const container = elements.basic('div', 'project-heading-container');
       const form = elements.basic('form', 'edit-project');
       
-      const name = elements.basic('input', 'edit-project-name');
+      const name = elements.basic('input', 'edit-project-name,content-input');
       name.type = 'text';
       name.value = project.name;
       form.appendChild(name);
@@ -296,7 +294,7 @@ const render = (function() {
 
       const form = elements.basic('form', 'new-task-form');
   
-      const name = elements.basic('input', 'task-name');
+      const name = elements.basic('input', 'task-name,content-input');
       name.type = 'text';
       name.placeholder = 'new task!';
       form.appendChild(name);
