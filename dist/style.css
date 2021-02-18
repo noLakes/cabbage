@@ -130,8 +130,11 @@ select {
   --p6: #172a23;
   --s1: #53617e;
   --good: #3597f5;
-  --caution: #c98559;
+  --attention: #e3e07f;
+  --caution: #f0b319;
+  --cautionT: #f0b319d2;
   --alert: #f65c4c;
+  --alertT: #f65d4cd0;
 }
 
 
@@ -358,6 +361,41 @@ input.project-name:focus {
 .task-tile:hover {
   cursor: pointer;
   background-color: var(--p2);
+}
+
+.task-tile.complete {
+  background-color: var(--p0);
+}
+
+.task-tile i {
+  margin-right: 3px;
+}
+
+.due-date, .list-counter {
+  padding: 0 5px;
+  border-radius: 5px;
+  width: max-content;
+}
+
+.due-date {
+  padding: 0 4px;
+}
+
+.due-today {
+  background-color: var(--cautionT);
+}
+
+.overdue {
+  background-color: var(--alertT);
+}
+
+.soon {
+  background-color: var(--attention);
+}
+
+.tasks-complete {
+  background-color: var(--p0);
+  font-weight: 900;
 }
 
 h3 {

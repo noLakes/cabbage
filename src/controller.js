@@ -157,7 +157,8 @@ const controller = (function() {
     if(isNaN(dateValue)) {
       dateValue = 0;
     } else {
-      dateValue = new Date(dateValue).getTime() + 18000000;
+      dateValue = new Date(dateValue).getTime() + 18100000;
+      console.log(new Date(dateValue));
     }
     db.update_item(
       document.querySelector('.modal-content').dataset.uid,

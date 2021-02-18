@@ -146,6 +146,7 @@ const render = (function() {
         const listCounter = elements.basic('p', 'list-counter');
         listCounter.appendChild(elements.basic('i','far,fa-check-square'))
         listCounter.appendChild(document.createTextNode((`${listRatio[0]}/${listRatio[1]}`)));
+        if(listRatio[0] === listRatio[1]) listCounter.classList.add('tasks-complete');
         infoContainer.appendChild(listCounter);
       } else {
         infoContainer.appendChild(elements.basic('br'));
