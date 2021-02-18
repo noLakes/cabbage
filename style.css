@@ -293,7 +293,6 @@ input.project-name:focus {
   outline: none;
   border-color: var(--p1);
   box-shadow: 0 0 3px var(--p1);
-
 }
 
 .active {
@@ -312,6 +311,7 @@ input.project-name:focus {
 .project-heading-container {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 .edit-project {
@@ -327,9 +327,33 @@ input.project-name:focus {
   color: var(--p0);
 }
 
+.content-input {
+  background-color: transparent;
+  border: 1px solid var(--p2);
+  width: max-content;
+  max-width: 90%;
+  margin-top: 5px;
+  padding: 0px 5px;
+}
+
+.edit-project-name.content-input {
+  font-size: 24px;
+  font-weight: 700;
+  width: auto;
+}
+
+.content-input:focus {
+  outline: none;
+  border-color: var(--p1);
+  box-shadow: 0 0 3px var(--p1);
+}
+
 .new-task-button {
   margin-left: 2.5rem;
+  padding-bottom: 4px;
   background-color: transparent;
+  height: min-content;
+  align-self: flex-end;
 }
 
 .new-task-button:hover {
@@ -337,11 +361,18 @@ input.project-name:focus {
   color: var(--p0);
 }
 
+.new-task-button:disabled {
+  color: rgba(0, 0, 0, 0.482);
+}
+
 .tasks-container {
-  display: grid;
+  /*display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-auto-rows: 100px;
-  gap: 10px 10px;
+  grid-auto-rows: 80px;
+  gap: 10px 10px;*/
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   padding: 1rem 0;
 }
 
@@ -349,9 +380,12 @@ input.project-name:focus {
   display: flex;
   flex-direction: column;
   width: 100%;
+  margin: 5px;
+  flex: 1 0 20%;
   max-width: 256px;
   height: 100%;
-  padding: 1rem;
+  max-height: 80px;
+  padding: 0.6rem;
   background-color: var(--p3);
   border-radius: 5px;
   transition: 0.2s;
@@ -371,10 +405,27 @@ input.project-name:focus {
   margin-right: 3px;
 }
 
+.task-tile h3 {
+  font-size: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.task-tile h3:hover {
+  overflow: visible;
+}
+
+.task-tile .info-container {
+  display: flex;
+  flex-direction: row;
+}
+
 .due-date, .list-counter {
   padding: 0 5px;
   border-radius: 5px;
   width: max-content;
+  font-size: 15px;
 }
 
 .due-date {
@@ -396,10 +447,6 @@ input.project-name:focus {
 .tasks-complete {
   background-color: var(--p0);
   font-weight: 900;
-}
-
-h3 {
-  font-size: 16px;
 }
 
 .check {
