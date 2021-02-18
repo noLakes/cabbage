@@ -23,7 +23,7 @@ const controller = (function() {
     const projects = db.fetchProjects();
     for(let key in projects) {
       const projectEl = render.projectNav(projects[key]);
-      projectEl.addEventListener("click", activate);
+      projectEl.querySelector('a').addEventListener("click", activate);
       elements.project_links_container.appendChild(projectEl);
     }
   }
@@ -38,7 +38,7 @@ const controller = (function() {
   }
 
   const reloadProjects = () => {
-    const active = document.querySelector('.active');
+    const active = document.querySelector('a.active');
     elements.project_links_container.innerHTML = '';
     initProjects();
     if(!active.classList.contains('time-link')) {
@@ -48,7 +48,7 @@ const controller = (function() {
 
   const reloadContent = () => {
     clearContent();
-    const active = document.querySelector('.active');
+    const active = document.querySelector('a.active');
     loadHandler(active);
   }
 
@@ -77,19 +77,12 @@ const controller = (function() {
   }
 
   const assign_task_form_listeners = (form) => {
-    form.querySelector('.new-task-init').addEventListener('click', (e) => {
-      e.target.style.display = 'none';
-      form.querySelector('.form-container').style.display = 'block';
-    })
-
     form.querySelector('input.submit-task').addEventListener('click', (e) => {
       if(form.querySelector('.task-name').value.length > 0) {
         db.add_task(
           e.target.dataset.uid,
           form.querySelector('.task-name').value,
         )
-        form.querySelector('.form-container').style.display = 'none';
-        form.querySelector('.new-task-init').style.display = 'block';
         reloadContent();
         } else {
           alert('Task name required.');
@@ -97,15 +90,16 @@ const controller = (function() {
     })
 
     form.querySelector('.cancel-task').addEventListener('click', (e) => {
-      form.querySelector('.form-container').style.display = 'none';
-      form.querySelector('.new-task-init').style.display = 'block';
+      form.remove();
+      document.querySelector('.new-task-button').disabled = false;
     })
   }
 
   const loadNewTaskForm = (uid) => {
     const new_task_form = render.new_task_form(uid);
     assign_task_form_listeners(new_task_form);
-    document.querySelector('.tasks-container').appendChild(new_task_form);
+    document.querySelector('.tasks-container').prepend(new_task_form);
+    document.querySelector('.new-task-tile .task-name').focus();
   }
 
   const open_project_edit_form = (project) => {
@@ -131,9 +125,14 @@ const controller = (function() {
 
   const loadProjectHeading = (project) => {
     const projectHeading = render.projectHeading(project);
+    
     projectHeading.querySelector('.edit-project').addEventListener('click', (e) => {
       e.target.parentElement.remove();
       open_project_edit_form(project);
+    })
+    projectHeading.querySelector('.new-task-button').addEventListener('click', (e) => {
+      loadNewTaskForm(e.target.dataset.uid);
+      e.target.disabled = true;
     })
     elements.content.prepend(projectHeading);
   }
@@ -150,7 +149,6 @@ const controller = (function() {
     for(let key in project.children) {
       loadTask(project.children[key]);
     }
-    loadNewTaskForm(uid);
   }
 
   const update_task = () => {
@@ -248,7 +246,7 @@ const controller = (function() {
     if(e.target.classList.contains('active')) return;
     clearActive();
     e.target.classList.add('active');
-    e.target.parentElement.classList.add('active');
+    if(e.target.classList.contains('project-link')) e.target.parentElement.classList.add('active');
     loadHandler(e.target);
   }
 

@@ -42,7 +42,7 @@ const render = (function() {
           name.dataset.uid = edit.uid;
         }
 
-        const save = elements.basic('button', 'save-check');
+        const save = elements.basic('button', 'save-check,content-button');
         save.innerHTML = 'save';
         save.addEventListener('click', () => {
           if(edit) {
@@ -58,7 +58,7 @@ const render = (function() {
           container.remove();
         })
 
-        const cancel = elements.basic('button', 'cancel-check');
+        const cancel = elements.basic('button', 'cancel-check,content-button');
         cancel.innerHTML = 'cancel';
         cancel.addEventListener('click', () => {
           if(edit) container.nextSibling.style.display = 'flex';
@@ -183,7 +183,7 @@ const render = (function() {
         taskerContainer.appendChild(leftContainer);
         
         const rightContainer = elements.basic('div', 'right');
-          const complete = elements.basic('button', 'complete');
+          const complete = elements.basic('button', 'complete,content-button');
           if(task.complete) complete.classList.add('done');
           complete.innerHTML = 'complete';
           
@@ -199,7 +199,7 @@ const render = (function() {
 
           rightContainer.appendChild(complete);
 
-          const del = elements.basic('button', 'delete');
+          const del = elements.basic('button', 'delete,content-button');
           del.innerHTML = 'delete';
           rightContainer.appendChild(del);
         taskerContainer.appendChild(rightContainer);
@@ -208,7 +208,7 @@ const render = (function() {
 
       const dueContainer = elements.basic('div', 'due-container');
       
-      const addDue = elements.basic('button', 'add-due');
+      const addDue = elements.basic('button', 'add-due,content-button');
         addDue.innerHTML = '+ due date';
         if(task.due) addDue.style.display = 'none';
         addDue.addEventListener('click', (e) => {
@@ -224,7 +224,7 @@ const render = (function() {
         due.value = db.formatDateForPicker(task);
         dueActions.appendChild(due);
 
-        const removeDue = elements.basic('button', 'delete-due');
+        const removeDue = elements.basic('button', 'delete-due,content-button');
         removeDue.innerHTML = 'remove';
         removeDue.addEventListener('click', (e) => {
           e.target.parentElement.style.display = 'none';
@@ -249,7 +249,7 @@ const render = (function() {
           checkList.appendChild(this.check(task.children[key]));
         }
 
-        const addItem = elements.basic('button', 'add-item');
+        const addItem = elements.basic('button', 'add-item,content-button');
         addItem.innerHTML = '+ item';
         addItem.addEventListener('click', () => {
           checkList.appendChild(this.check_form());
@@ -270,21 +270,46 @@ const render = (function() {
       name.value = project.name;
       form.appendChild(name);
 
-      const submit = elements.basic('input', 'submit-edit');
+      const submit = elements.basic('input', 'submit-edit,content-button');
       submit.type = 'button';
       submit.dataset.uid = project.uid;
       submit.value = 'save';
       form.appendChild(submit);
 
-      const cancel = elements.basic('input', 'cancel-edit');
+      const cancel = elements.basic('input', 'cancel-edit,content-button');
       cancel.type = 'button';
       cancel.value = 'cancel';
       form.appendChild(cancel);
 
-      const del = elements.basic('input', 'delete-project');
+      const del = elements.basic('input', 'delete-project,content-button');
       del.type = 'button';
       del.value = 'delete';
       form.appendChild(del);
+
+      container.appendChild(form);
+      return container;
+    },
+
+    new_task_form(parent_uid) {
+      const container = elements.basic('div', 'new-task-tile');
+
+      const form = elements.basic('form', 'new-task-form');
+  
+      const name = elements.basic('input', 'task-name');
+      name.type = 'text';
+      name.placeholder = 'new task!';
+      form.appendChild(name);
+
+      const submit = elements.basic('input', 'submit-task,content-button');
+      submit.type = 'button';
+      submit.dataset.uid = parent_uid;
+      submit.value = 'save';
+      form.appendChild(submit);
+
+      const cancel = elements.basic('input', 'cancel-task,content-button');
+      cancel.type = 'button';
+      cancel.value = 'cancel';
+      form.appendChild(cancel);
 
       container.appendChild(form);
       return container;
@@ -296,9 +321,16 @@ const render = (function() {
       heading.innerHTML = project.name;
       container.appendChild(heading);
 
-      const editButton = elements.basic('button', 'edit-project');
-      editButton.innerHTML = 'edit';
+      const editButton = elements.basic('a', 'edit-project');
+      editButton.appendChild(elements.basic('i', 'fas,fa-edit'));
       container.appendChild(editButton);
+
+      const newTaskButton = elements.basic('button', 'new-task-button,content-button');
+      newTaskButton.dataset.uid = project.uid;
+      newTaskButton.appendChild(elements.basic('i', 'fas,fa-plus-square'));
+      newTaskButton.appendChild(document.createTextNode(' new task'));
+      container.appendChild(newTaskButton);
+
       return container;
     },
 
@@ -319,52 +351,17 @@ const render = (function() {
       name.placeholder = 'new project!';
       form.appendChild(name);
 
-      const submit = elements.basic('input', 'submit-project');
+      const submit = elements.basic('input', 'submit-project,nav-button');
       submit.type = 'button';
       submit.value = 'save';
       form.appendChild(submit);
 
-      const cancel = elements.basic('input', 'cancel-project');
+      const cancel = elements.basic('input', 'cancel-project,nav-button');
       cancel.type = 'button';
       cancel.value = 'cancel';
       form.appendChild(cancel);
 
       return form;
-    },
-
-    //needs to look the same as a task tile
-    new_task_form(parent_uid) {
-      const container = elements.basic('div', 'new-task-container');
-
-      const new_task_init = elements.basic('a', 'new-task-init');
-      new_task_init.innerHTML = '+ new task';
-      container.appendChild(new_task_init);
-
-
-      const form_container = elements.basic('div', 'form-container');
-      form_container.style.display = 'none';
-
-      const form = elements.basic('form', 'new-task-form');
-      
-      const name = elements.basic('input', 'task-name');
-      name.type = 'text';
-      name.placeholder = 'new task!';
-      form.appendChild(name);
-
-      const submit = elements.basic('input', 'submit-task');
-      submit.type = 'button';
-      submit.dataset.uid = parent_uid;
-      submit.value = 'save';
-      form.appendChild(submit);
-
-      const cancel = elements.basic('input', 'cancel-task');
-      cancel.type = 'button';
-      cancel.value = 'cancel';
-      form.appendChild(cancel);
-
-      form_container.appendChild(form);
-      container.appendChild(form_container);
-      return container;
     },
 
     nothing() {
