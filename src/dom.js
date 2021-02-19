@@ -261,7 +261,6 @@ const render = (function() {
     },
 
     edit_project_form(project) {
-      const container = elements.basic('div', 'project-heading-container');
       const form = elements.basic('form', 'edit-project');
       
       const name = elements.basic('input', 'edit-project-name,content-input');
@@ -285,8 +284,7 @@ const render = (function() {
       del.value = 'delete';
       form.appendChild(del);
 
-      container.appendChild(form);
-      return container;
+      return form;
     },
 
     new_task_form(parent_uid) {
