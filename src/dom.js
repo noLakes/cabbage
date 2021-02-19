@@ -83,8 +83,10 @@ const render = (function() {
         checkBox.addEventListener('change', (e) => {
           if(e.target.checked) {
             db.update_item(check.uid, {complete : true});
+            e.target.parentElement.parentElement.querySelector('.name').classList.add('checked');
           }else if(!e.target.checked) {
             db.update_item(check.uid, {complete : false});
+            e.target.parentElement.parentElement.querySelector('.name').classList.remove('checked');
           }
         })
         const checkmark = elements.basic('span', 'checkmark');
@@ -93,19 +95,20 @@ const render = (function() {
       checkContainer.appendChild(checkboxContainer);
 
       const name = elements.basic('p', 'name');
+        if(check.complete) name.classList.add('checked');
         name.innerHTML = check.name;
       checkContainer.appendChild(name);
 
       const actionContainer = elements.basic('div', 'action-container');
-        const edit = elements.basic('button', 'edit-check');
-        edit.innerHTML = 'edit';
+        const edit = elements.basic('a', 'edit-check,content-button');
+        edit.appendChild(elements.basic('i', 'fas,fa-edit'));
         edit.addEventListener('click', () => {
           checkContainer.parentElement.insertBefore(this.check_form(check), checkContainer);
           checkContainer.style.display = 'none';
         })
         
-        const del = elements.basic('button', 'delete-check');
-        del.innerHTML = 'delete';     
+        const del = elements.basic('a', 'delete-check,content-button');
+        del.appendChild(elements.basic('i', 'fas,fa-trash-alt'));
         del.addEventListener('click', () => {
           db.remove(checkContainer.dataset.uid);
           checkContainer.remove();
@@ -164,7 +167,7 @@ const render = (function() {
       const modal_content = elements.basic('div', 'modal-content');
       modal_content.dataset.uid = task.uid;
 
-      const taskerContainer = elements.basic('div', 'tasker-container');
+      const headerContainer = elements.basic('div', 'header-container');
         const leftContainer = elements.basic('div', 'left');
           const title = elements.basic('textarea', 'title');
           title.innerHTML = task.name;
@@ -179,7 +182,7 @@ const render = (function() {
           spanWrapper.appendChild(projectLink);
           projectTag.appendChild(spanWrapper);
           leftContainer.appendChild(projectTag);
-        taskerContainer.appendChild(leftContainer);
+        headerContainer.appendChild(leftContainer);
         
         const rightContainer = elements.basic('div', 'right');
           const complete = elements.basic('button', 'complete,content-button');
@@ -198,26 +201,30 @@ const render = (function() {
 
           rightContainer.appendChild(complete);
 
+          const addDue = elements.basic('button', 'add-due,content-button');
+          addDue.innerHTML = '+ due date';
+          if (task.due) addDue.style.display = 'none';
+          addDue.addEventListener('click', (e) => {
+            e.target.style.display = 'none';
+            document.querySelector('.due-container').style.display = 'block';
+          })
+          rightContainer.appendChild(addDue);
+
           const del = elements.basic('button', 'delete,content-button');
           del.innerHTML = 'delete';
           rightContainer.appendChild(del);
-        taskerContainer.appendChild(rightContainer);
+        headerContainer.appendChild(rightContainer);
 
-      modal_content.appendChild(taskerContainer);
+      modal_content.appendChild(headerContainer);
 
       const dueContainer = elements.basic('div', 'due-container');
-      
-      const addDue = elements.basic('button', 'add-due,content-button');
-        addDue.innerHTML = '+ due date';
-        if(task.due) addDue.style.display = 'none';
-        addDue.addEventListener('click', (e) => {
-          e.target.style.display = 'none';
-          e.target.nextSibling.style.display = 'block';
-        })
-        dueContainer.appendChild(addDue);
+
+      const dueHeading = elements.basic('h4', 'modal-sub-heading', 'due-heading');
+      dueHeading.innerHTML = 'Due';
+      dueContainer.appendChild(dueHeading);
       
       const dueActions = elements.basic('div', 'due-controls');
-      if(!task.due) dueActions.style.display = 'none';
+      if(!task.due) dueContainer.style.display = 'none';
         const due = elements.basic('input', 'due-input');
         due.type = 'date';
         due.value = db.formatDateForPicker(task);
@@ -226,8 +233,8 @@ const render = (function() {
         const removeDue = elements.basic('button', 'delete-due,content-button');
         removeDue.innerHTML = 'remove';
         removeDue.addEventListener('click', (e) => {
-          e.target.parentElement.style.display = 'none';
-          e.target.parentElement.previousSibling.style.display = 'block';
+          dueContainer.style.display = 'none';
+          document.querySelector('.add-due').style.display = 'block';
           due.value = '';
         })
         dueActions.appendChild(removeDue);
@@ -236,6 +243,11 @@ const render = (function() {
       modal_content.appendChild(dueContainer);
 
       const infoContainer = elements.basic('div', 'info-container');
+        
+        const infoHeading = elements.basic('h4', 'modal-sub-heading', 'info-heading');
+        infoHeading.innerHTML = 'Info';
+        infoContainer.appendChild(infoHeading);
+
         const info = elements.basic('textarea', 'info');
         if(task.info) info.value = task.info;
         info.placeholder = 'add more information here...';
@@ -243,6 +255,11 @@ const render = (function() {
       modal_content.appendChild(infoContainer);
 
       const checkListContainer = elements.basic('div', 'checklist-container'); 
+
+        const checkHeading = elements.basic('h4', 'modal-sub-heading', 'check-heading');
+        checkHeading.innerHTML = 'Checklist';
+        checkListContainer.appendChild(checkHeading);
+
         const checkList = elements.basic('div', 'checklist');
         for(let key in task.children) {
           checkList.appendChild(this.check(task.children[key]));
@@ -372,7 +389,7 @@ const render = (function() {
 
     nothingDisplay() {
       const el = elements.basic('p', 'nothing');
-      el.innerHTML = 'there is nothing here right now......try adding a task!';
+      el.innerHTML = 'there is nothing here right now...';
       return el;
     },
 

@@ -152,27 +152,6 @@ body {
   min-height: 100vh;
 }
 
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
-}
-
 .nav-container {
   display: flex;
   flex-direction: column;
@@ -200,10 +179,6 @@ body {
   list-style: disc;
   margin-left: 1.2rem;
   color: #a5d4ca4a;
-}
-
-.project-link {
-  color: var(--p2);
 }
 
 .projects-label {
@@ -270,13 +245,11 @@ button.new-project:hover, input[type=button].nav-button:hover {
 
 .content-button {
   color: var(--p6);
-  background-color: var(--p5);
 }
 
 .content-button:hover {
   cursor: pointer;
   color: var(--p5);
-  background-color: var(--p3);
 }
 
 .project-heading-container .content-button {
@@ -464,12 +437,24 @@ a.edit-project:hover {
   background-color: var(--cautionT);
 }
 
+input.due-today {
+  border-color: var(--cautionT);
+}
+
 .overdue {
   background-color: var(--alertT);
 }
 
+input.overdue {
+  border-color: var(--alertT);
+}
+
 .soon {
   background-color: var(--attention);
+}
+
+input.soon {
+  border-color: var(--attention);
 }
 
 .tasks-complete {
@@ -477,8 +462,137 @@ a.edit-project:hover {
   font-weight: 900;
 }
 
+/* modal content begins */
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+  background-color: var(--p3);
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border-radius: 5px;
+  width: 512px; /* Could be more or less, depending on screen size */
+  box-shadow: 0px 4px var(--p5);
+}
+
+.modal-content > div {
+  width: 100%;
+}
+
+.modal-content .content-button {
+  font-size: 14px;
+}
+
+.header-container {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  padding-top: 5px;
+  align-items: flex-end;
+}
+
+textarea.title, textarea.info {
+  font-size: 20px;
+  background-color: transparent;
+  padding: 0;
+  width: 100%;
+  border: none;
+  height: 28px;
+  resize: none;
+}
+
+textarea.title:focus, textarea.info:focus{
+  outline: none;
+  border-color: var(--p1);
+  box-shadow: 0 0 3px var(--p1);
+}
+
+textarea.info {
+  font-size: 14px;
+  height: auto;
+}
+
+.modal-sub-heading {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.project-tag {
+  font-size: 14px;
+}
+
+.project-link {
+  color: var(--p4);
+}
+
+.project-link:hover {
+  color: var(--p0);
+}
+
+.due-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.due-controls {
+
+}
+
+input.due-input {
+  border: 1px solid var(--p4);
+  background-color: transparent;
+  border-radius: 5px;
+  margin-right: 0.5rem;
+  font-size: 14px;
+  width: max-content;
+}
+
 .check {
   display: flex;
+}
+
+.check *, .check-form * {
+  font-size: 14px;
+}
+
+.check p.name.checked {
+  text-decoration: line-through;
+  color: rgba(0, 0, 0, 0.699);
+}
+
+input.name-input {
+  background-color: transparent;
+  border: 1px solid var(--p2);
+  height: 20px;
+}
+
+input.name-input:focus {
+  outline: none;
+  border-color: var(--p1);
+  box-shadow: 0 0 3px var(--p0);
 }
 
  /* Customize the label (the container) */
@@ -488,7 +602,7 @@ a.edit-project:hover {
   padding-left: 35px;
   margin-bottom: 12px;
   cursor: pointer;
-  font-size: 22px;
+  font-size: 14px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -521,7 +635,7 @@ a.edit-project:hover {
 
 /* When the checkbox is checked, add a blue background */
 .checkBoxContainer input:checked ~ .checkmark {
-  background-color: #2196F3;
+  background-color: var(--good);
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -547,7 +661,7 @@ a.edit-project:hover {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
-} 
+}
 
 button.done {
   background-color: rgb(54, 255, 47);
