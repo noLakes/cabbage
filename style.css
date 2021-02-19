@@ -399,6 +399,11 @@ a.edit-project:hover {
   padding: 1rem 0;
 }
 
+.nothing {
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.753);
+}
+
 .task-tile, .new-task-tile {
   display: flex;
   flex-direction: column;
