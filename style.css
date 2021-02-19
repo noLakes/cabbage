@@ -283,7 +283,12 @@ button.new-project:hover, input[type=button].nav-button:hover {
   color: black;
 }
 
-.delete-project:hover {
+.project-heading-container .content-button:hover {
+  background-color: transparent;
+  color: var(--p0);
+}
+
+.project-heading-container .delete-project:hover {
   color: var(--alert);
 }
 
@@ -320,20 +325,28 @@ input.project-name:focus {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  width: 100%;
+  width: auto;
 }
 
-.edit-project {
+a.edit-project {
   margin-left: 5px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
 }
 
 .edit-project i {
   font-size: 13px;
 }
 
-.edit-project:hover {
+a.edit-project:hover {
   cursor: pointer;
   color: var(--p0);
+}
+
+.edit-project-form {
+  display: flex;
 }
 
 .content-input {
@@ -357,11 +370,13 @@ input.project-name:focus {
 }
 
 .new-task-button {
-  margin-left: 2.5rem;
-  padding-bottom: 4px;
+  margin-left: 1rem;
   background-color: transparent;
-  height: min-content;
-  align-self: flex-end;
+  height: 100%;
+}
+
+.new-task-button i {
+  font-size: 13px;
 }
 
 .new-task-button:hover {
