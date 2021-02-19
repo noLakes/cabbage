@@ -103,6 +103,7 @@ const controller = (function() {
   }
 
   const open_project_edit_form = (project) => {
+    document.querySelector('a.edit-project').remove();
     const edit_form = render.edit_project_form(project);
 
     edit_form.querySelector('.submit-edit').addEventListener('click', (e) => {
@@ -127,9 +128,8 @@ const controller = (function() {
   const loadProjectHeading = (project) => {
     const projectHeading = render.projectHeading(project);
     
-    projectHeading.querySelector('.edit-project').addEventListener('click', (e) => {
+    projectHeading.querySelector('a.edit-project').addEventListener('click', (e) => {
       document.querySelector('.project-heading').remove();
-      e.target.remove();
       open_project_edit_form(project);
     })
     projectHeading.querySelector('.new-task-button').addEventListener('click', (e) => {
@@ -232,18 +232,25 @@ const controller = (function() {
     });
   }
 
+  const loadStaticHeading = (title) => {
+    elements.content.prepend(render.staticHeading(title));
+  }
+
   // determines which selection of items to pool and load into the content window
   const loadHandler = (target) => {
     if(target.classList.contains('time-link')) {
       switch(target.id) {
         case 'today':
           loadBatch(db.dateQuery(time.endOfDay()), false);
+          loadStaticHeading('Today');
           break
         case 'upcoming':
           loadBatch(db.dateQuery(time.oneWeek()), false);
+          loadStaticHeading('Upcoming');
           break
         default:
           loadBatch(db.fetchTasksByDue());
+          loadStaticHeading('Home');
       }
     }
     else {

@@ -261,7 +261,7 @@ const render = (function() {
     },
 
     edit_project_form(project) {
-      const form = elements.basic('form', 'edit-project');
+      const form = elements.basic('form', 'edit-project-form');
       
       const name = elements.basic('input', 'edit-project-name,content-input');
       name.type = 'text';
@@ -329,6 +329,15 @@ const render = (function() {
       container.appendChild(newTaskButton);
 
       return container;
+    },
+
+    staticHeading(title) {
+      const container = elements.basic('div', 'project-heading-container');
+      const heading = elements.basic('h2', 'project-heading');
+      heading.innerHTML = title;
+      container.appendChild(heading);
+
+      return container
     },
 
     projectNav(project) {
