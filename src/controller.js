@@ -91,6 +91,7 @@ const controller = (function() {
 
     form.querySelector('.cancel-task').addEventListener('click', (e) => {
       form.remove();
+      if(checkEmpty()) loadEmptyPlaceholder();
       document.querySelector('.new-task-button').disabled = false;
     })
   }
@@ -134,6 +135,7 @@ const controller = (function() {
     })
     projectHeading.querySelector('.new-task-button').addEventListener('click', (e) => {
       loadNewTaskForm(e.target.dataset.uid);
+      if(document.querySelector('.nothing')) document.querySelector('.nothing').remove();
       e.target.disabled = true;
     })
     elements.content.prepend(projectHeading);
@@ -236,6 +238,14 @@ const controller = (function() {
     elements.content.prepend(render.staticHeading(title));
   }
 
+  const checkEmpty = () => {
+    return document.querySelector('.tasks-container').childElementCount === 0;
+  }
+
+  const loadEmptyPlaceholder = () => {
+    document.querySelector('.tasks-container').appendChild(render.nothingDisplay());
+  }
+
   // determines which selection of items to pool and load into the content window
   const loadHandler = (target) => {
     if(target.classList.contains('time-link')) {
@@ -256,6 +266,7 @@ const controller = (function() {
     else {
       loadProject(target.dataset.uid);
     }
+    if(checkEmpty()) loadEmptyPlaceholder();
   }
 
   const activate = (e) => {

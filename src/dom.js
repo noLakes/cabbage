@@ -370,9 +370,9 @@ const render = (function() {
       return form;
     },
 
-    nothing() {
+    nothingDisplay() {
       const el = elements.basic('p', 'nothing');
-      el.innerHTML = 'there is nothing here right now';
+      el.innerHTML = 'there is nothing here right now......try adding a task!';
       return el;
     },
 
