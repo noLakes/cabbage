@@ -121,7 +121,21 @@ select {
 }
 
 :root {
-  --p0: #51db9a;
+  --bg: #607d8b;
+  --bgl1: #78909c;
+  --bgl2: #90a4ae; 
+  --bgl3: #b0bec5;
+  --bgl4: #cfd8dc;
+  --bgl5: #eceff1;
+  --bgd1: #546e7a;
+  --bgd2: #455a64;
+  --bgd3: #37474f;
+  --bgd4: #263238; 
+  --gr: #1adab4;
+  --good: #a2d5a3;
+  --bad: #d59086;
+  --caution: #ECBF13;
+  /* --p0: #51db9a;
   --p1: #51ad9a;
   --p2: #a5d4ca;
   --p3: #8fc5b2;
@@ -134,7 +148,7 @@ select {
   --caution: #f0b319;
   --cautionT: #f0b319d2;
   --alert: #f65c4c;
-  --alertT: #f65d4cd0;
+  --alertT: #f65d4cd0;*/
 }
 
 
@@ -159,30 +173,30 @@ body {
   max-width: 180px;
   min-width: 180px;
   padding: 2rem 1rem;
-  background-color: var(--p5);
+  background-color: var(--bg);
   font-size: 16px;
 }
 
 .logo {
   font-family: Ubuntu;
   font-style: italic;
-  color: var(--p1);
+  color: var(--gr);
 }
 
 .static-links, .project-links {
   display: flex;
   flex-direction: column;
-  color: var(--p2);
+  color: var(--bgd4);
 }
 
 .project-item {
   list-style: disc;
   margin-left: 1.2rem;
-  color: #a5d4ca4a;
+  color: var(--bgd4);
 }
 
 .projects-label {
-  color: var(--p2);
+  color: var(--bgd5);
 }
 
 #home {
@@ -190,11 +204,11 @@ body {
 }
 
 #home i {
-  color: rgb(216, 190, 122);
+  color: var(--bgd5);
 }
 
 #today i {
-  color: rgb(181, 101, 101);
+  color: var(--bgd5);
 }
 
 #upcoming { 
@@ -202,7 +216,7 @@ body {
 }
 
 #upcoming i {
-  color: rgb(232, 237, 174);
+  color: var(--bgd5);
 }
 
 .time-link, .project-link {
@@ -210,14 +224,14 @@ body {
 }
 
 .time-link:not(.active):hover, .project-link:not(.active):hover {
-  color: var(--p1);
+  color: var(--bgl3);
 }
 
 button.new-project, input[type=button], .nav-button, .content-button {
   border-radius: 5px;
   border: none;
   background-color: transparent; /*#5e9681a5*/
-  color: var(--p2);
+  color: var(--bgd5);
   padding: 0px 3px;
   width: max-content;
 }
@@ -231,7 +245,8 @@ button.new-project {
 }
 
 input[type=button].nav-button, .nav-button {
-  background-color: #5e9681a5;
+  background-color: var(--bgl3);
+  font-size: 14px;
 }
 
 input.submit-project {
@@ -240,11 +255,11 @@ input.submit-project {
 
 button.new-project:hover, input[type=button].nav-button:hover {
   cursor: pointer;
-  color: var(--p1);
+  color: var(--bgd1);
 }
 
 .content-button {
-  color: var(--p6);
+  color: var(--bg);
 }
 
 .content-button:hover {
@@ -267,8 +282,8 @@ button.new-project:hover, input[type=button].nav-button:hover {
 
 input.project-name {
   background-color: transparent;
-  color: var(--p2);
-  border: 1px solid var(--p4);
+  color: var(--bgd4);
+  border: 1px solid var(--bgl1);
   width: max-content;
   max-width: 90%;
   margin-top: 5px;
@@ -277,12 +292,12 @@ input.project-name {
 
 input.project-name:focus {
   outline: none;
-  border-color: var(--p1);
-  box-shadow: 0 0 3px var(--p1);
+  border-color: var(--bgl2);
+  box-shadow: 0 0 3px var(--bgl2);
 }
 
 .active {
-  color: var(--p0);
+  color: var(--bgl3);
 }
 
 .content-container {
@@ -291,7 +306,7 @@ input.project-name:focus {
   flex-wrap: wrap;
   width: 100%;
   padding: 1rem;
-  background-color: var(--p4);
+  background-color: var(--bgl5);
 }
 
 .project-heading-container {
@@ -387,19 +402,20 @@ a.edit-project:hover {
   height: 100%;
   max-height: 80px;
   padding: 0.6rem;
-  background-color: var(--p3);
+  background-color: var(--bgl4);
   border-radius: 5px;
   transition: 0.2s;
-  box-shadow: 0px 4px var(--p5);
+  box-shadow: 0px 4px var(--bgl3);
 }
 
 .task-tile:hover {
   cursor: pointer;
-  background-color: var(--p2);
+  background-color: var(--bgl2);
+  box-shadow: 0px 4px var(--bgl1);
 }
 
 .task-tile.complete {
-  background-color: var(--p0);
+  background-color: var(--good);
 }
 
 .task-tile i {
@@ -408,13 +424,10 @@ a.edit-project:hover {
 
 .task-tile h3 {
   font-size: 16px;
+  font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.task-tile h3:hover {
-  overflow: visible;
 }
 
 .task-tile .info-container {
