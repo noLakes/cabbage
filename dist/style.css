@@ -133,22 +133,8 @@ select {
   --bgd4: #263238; 
   --gr: #1adab4;
   --good: #a2d5a3;
-  --bad: #d59086;
-  --caution: #ECBF13;
-  /* --p0: #51db9a;
-  --p1: #51ad9a;
-  --p2: #a5d4ca;
-  --p3: #8fc5b2;
-  --p4: #5e9681;
-  --p5: #34524c;
-  --p6: #172a23;
-  --s1: #53617e;
-  --good: #3597f5;
-  --attention: #e3e07f;
-  --caution: #f0b319;
-  --cautionT: #f0b319d2;
-  --alert: #f65c4c;
-  --alertT: #f65d4cd0;*/
+  --bad: #d5a3a2e9;
+  --caution: #f2e667bb;
 }
 
 
@@ -172,27 +158,30 @@ body {
   width: 180px;
   max-width: 180px;
   min-width: 180px;
-  padding: 2rem 1rem;
-  background-color: var(--bg);
+  padding: 0 1rem;
+  background-color: var(--bgl1);
   font-size: 16px;
 }
 
 .logo {
   font-family: Ubuntu;
   font-style: italic;
-  color: var(--gr);
+  color: var(--good);
+  padding-top: 1rem;
+}
+
+.static-links {
+  margin-top: 0.5rem;
 }
 
 .static-links, .project-links {
   display: flex;
   flex-direction: column;
-  color: var(--bgd4);
 }
 
 .project-item {
   list-style: disc;
   margin-left: 1.2rem;
-  color: var(--bgd4);
 }
 
 .projects-label {
@@ -203,20 +192,8 @@ body {
   margin-top: 0.5rem;
 }
 
-#home i {
-  color: var(--bgd5);
-}
-
-#today i {
-  color: var(--bgd5);
-}
-
 #upcoming { 
   margin-bottom: 0.5rem;
-}
-
-#upcoming i {
-  color: var(--bgd5);
 }
 
 .time-link, .project-link {
@@ -224,7 +201,7 @@ body {
 }
 
 .time-link:not(.active):hover, .project-link:not(.active):hover {
-  color: var(--bgl3);
+  color: var(--bgl4);
 }
 
 button.new-project, input[type=button], .nav-button, .content-button {
@@ -244,18 +221,23 @@ button.new-project {
   margin-top: 5px;
 }
 
-input[type=button].nav-button, .nav-button {
+input[type=button].nav-button {
   background-color: var(--bgl3);
   font-size: 14px;
+}
+
+input[type=button].nav-button:hover {
+  cursor: pointer;
+  background-color: var(--bg);
 }
 
 input.submit-project {
   margin-right: 5px;
 }
 
-button.new-project:hover, input[type=button].nav-button:hover {
+button.new-project:hover {
   cursor: pointer;
-  color: var(--bgd1);
+  color: var(--bgl4);
 }
 
 .content-button {
@@ -264,7 +246,7 @@ button.new-project:hover, input[type=button].nav-button:hover {
 
 .content-button:hover {
   cursor: pointer;
-  color: var(--p5);
+  color: var(--bg);
 }
 
 .project-heading-container .content-button {
@@ -273,17 +255,16 @@ button.new-project:hover, input[type=button].nav-button:hover {
 
 .project-heading-container .content-button:hover {
   background-color: transparent;
-  color: var(--p0);
+  color: var(--bg);
 }
 
 .project-heading-container .delete-project:hover {
-  color: var(--alert);
+  color: var(--bad);
 }
 
 input.project-name {
   background-color: transparent;
-  color: var(--bgd4);
-  border: 1px solid var(--bgl1);
+  border: 1px solid var(--bgl2);
   width: max-content;
   max-width: 90%;
   margin-top: 5px;
@@ -292,12 +273,12 @@ input.project-name {
 
 input.project-name:focus {
   outline: none;
-  border-color: var(--bgl2);
-  box-shadow: 0 0 3px var(--bgl2);
+  border-color: var(--bgl3);
+  box-shadow: 0 0 3px var(--bgl3);
 }
 
 .active {
-  color: var(--bgl3);
+  color: var(--good);
 }
 
 .content-container {
@@ -306,7 +287,7 @@ input.project-name:focus {
   flex-wrap: wrap;
   width: 100%;
   padding: 1rem;
-  background-color: var(--bgl5);
+  background-color: var(--bgl4);
 }
 
 .project-heading-container {
@@ -330,7 +311,7 @@ a.edit-project {
 
 a.edit-project:hover {
   cursor: pointer;
-  color: var(--p0);
+  color: var(--bg);
 }
 
 .edit-project-form {
@@ -339,22 +320,23 @@ a.edit-project:hover {
 
 .content-input {
   background-color: transparent;
-  border: 1px solid var(--p2);
+  border: 1px solid var(--bgl1);
   width: max-content;
   max-width: 50%;
   padding: 0px 5px;
 }
 
 .edit-project-name.content-input {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 700;
   width: auto;
+  margin-right: 0.5rem;
 }
 
 .content-input:focus {
   outline: none;
-  border-color: var(--p1);
-  box-shadow: 0 0 3px var(--p1);
+  border-color: var(--bg);
+  box-shadow: 0 0 3px var(--bg);
 }
 
 .new-task-button {
@@ -395,14 +377,14 @@ a.edit-project:hover {
 .task-tile, .new-task-tile {
   display: flex;
   flex-direction: column;
-  width: 100%;
   margin: 5px;
-  flex: 1 0 20%;
+  width: 20%;
   max-width: 256px;
   height: 100%;
-  max-height: 80px;
+  max-height: 65px;
   padding: 0.6rem;
-  background-color: var(--bgl4);
+  border: 1px solid var(--bgl3);
+  background-color: var(--bgl5);
   border-radius: 5px;
   transition: 0.2s;
   box-shadow: 0px 4px var(--bgl3);
@@ -410,7 +392,7 @@ a.edit-project:hover {
 
 .task-tile:hover {
   cursor: pointer;
-  background-color: var(--bgl2);
+  background-color: var(--bgl3);
   box-shadow: 0px 4px var(--bgl1);
 }
 
@@ -422,8 +404,12 @@ a.edit-project:hover {
   margin-right: 3px;
 }
 
-.task-tile h3 {
-  font-size: 16px;
+h2 {
+  font-size: 22px;
+}
+
+h3 {
+  font-size: 15px;
   font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
@@ -435,15 +421,20 @@ a.edit-project:hover {
   flex-direction: row;
 }
 
+.task-tile i {
+  margin-right: 0.2rem;
+}
+
 .due-date, .list-counter {
-  padding: 0 5px;
+  padding: 0 0.25rem;
   border-radius: 5px;
   width: max-content;
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .due-date {
   padding: 0 4px;
+  margin-right: 0.5rem;
 }
 
 .due-today {
@@ -455,24 +446,23 @@ input.due-today {
 }
 
 .overdue {
-  background-color: var(--alertT);
+  background-color: var(--bad);
 }
 
 input.overdue {
-  border-color: var(--alertT);
+  border-color: var(--bad);
 }
 
 .soon {
-  background-color: var(--attention);
+  background-color: var(--caution);
 }
 
 input.soon {
-  border-color: var(--attention);
+  border-color: var(--caution);
 }
 
 .tasks-complete {
-  background-color: var(--p0);
-  font-weight: 900;
+  background-color: var(--good);
 }
 
 /* modal content begins */
@@ -491,12 +481,13 @@ input.soon {
 }
 
 .modal-content {
-  background-color: var(--p3);
+  border: 1px solid var(--bgl3);
+  background-color: var(--bgl5);
+  box-shadow: 0px 4px var(--bgl3);
   margin: 15% auto; /* 15% from the top and centered */
   padding: 20px;
   border-radius: 5px;
   width: 512px; /* Could be more or less, depending on screen size */
-  box-shadow: 0px 4px var(--p5);
 }
 
 .modal-content > div {
@@ -556,12 +547,12 @@ textarea.info {
   font-size: 14px;
 }
 
-.project-link {
-  color: var(--p4);
+.project-tag .project-link {
+  color: var(--bgl1);
 }
 
-.project-link:hover {
-  color: var(--p0);
+.project-tag .project-link:hover {
+  color: var(--bg);
 }
 
 .due-container {
