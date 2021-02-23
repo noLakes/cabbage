@@ -135,6 +135,7 @@ select {
   --good: #a2d5a3;
   --bad: #d5a3a2e9;
   --caution: #f2e667bb;
+  --alert: #e8bc8de9;
 }
 
 
@@ -246,7 +247,7 @@ button.new-project:hover {
 
 .content-button:hover {
   cursor: pointer;
-  color: var(--bg);
+  color: var(--bgd2);
 }
 
 .project-heading-container .content-button {
@@ -404,6 +405,19 @@ a.edit-project:hover {
   margin-right: 3px;
 }
 
+.new-task-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.new-task-form .task-name {
+  font-size: 15px;
+}
+
+.new-task-form .controls-container {
+  font-size: 13px;
+}
+
 h2 {
   font-size: 22px;
 }
@@ -438,11 +452,11 @@ h3 {
 }
 
 .due-today {
-  background-color: var(--cautionT);
+  background-color: var(--alert);
 }
 
 input.due-today {
-  border-color: var(--cautionT);
+  border-color: var(--alert);
 }
 
 .overdue {
@@ -483,11 +497,17 @@ input.soon {
 .modal-content {
   border: 1px solid var(--bgl3);
   background-color: var(--bgl5);
-  box-shadow: 0px 4px var(--bgl3);
+  box-shadow: 0px 2px var(--bgl3);
   margin: 15% auto; /* 15% from the top and centered */
   padding: 20px;
   border-radius: 5px;
   width: 512px; /* Could be more or less, depending on screen size */
+}
+
+.modal-content.done {
+  background-color: var(--good);
+  border: 1px solid var(--bgl5);
+  box-shadow: 0px 2px var(--bgl5);
 }
 
 .modal-content > div {
@@ -527,6 +547,11 @@ textarea.title, textarea.info {
   resize: none;
 }
 
+textarea.info {
+  height: auto;
+  min-height: 68px;
+}
+
 textarea.title:focus, textarea.info:focus{
   outline: none;
   border-color: var(--p1);
@@ -561,10 +586,6 @@ textarea.info {
   margin-bottom: 1rem;
 }
 
-.due-controls {
-
-}
-
 input.due-input {
   border: 1px solid var(--p4);
   background-color: transparent;
@@ -572,6 +593,21 @@ input.due-input {
   margin-right: 0.5rem;
   font-size: 14px;
   width: max-content;
+}
+
+input.due-input.overdue {
+  border: 1px solid var(--bad);
+  box-shadow: 0 0 5px var(--bad);
+}
+
+input.due-input.soon {
+  border: 2px solid var(--caution);
+  box-shadow: 0 0 5px var(--caution);
+}
+
+input.due-input.due-today {
+  border: 2px solid var(--alert);
+  box-shadow: 0 0 5px var(--alert);
 }
 
 .check {
@@ -622,6 +658,14 @@ input.name-input:focus {
   width: 0;
 }
 
+.check a i {
+  font-size: 12px;
+}
+
+.edit-check {
+  margin-left: 0.5rem;
+}
+
 /* Create a custom checkbox */
 .checkmark {
   position: absolute;
@@ -634,7 +678,7 @@ input.name-input:focus {
 
 /* On mouse-over, add a grey background color */
 .checkBoxContainer:hover input ~ .checkmark {
-  background-color: #ccc;
+  background-color: var(--bgl2);
 }
 
 /* When the checkbox is checked, add a blue background */
@@ -668,9 +712,7 @@ input.name-input:focus {
 }
 
 button.done {
-  background-color: rgb(54, 255, 47);
-} 
-
-.footer-container {
-
+  background-color: var(--good);
+  color: var(--bgl5);
+  border: 1px solid var(--bgl5);
 }

@@ -166,6 +166,7 @@ const render = (function() {
     task_modal(task) {
       const modal_content = elements.basic('div', 'modal-content');
       modal_content.dataset.uid = task.uid;
+      if(task.complete) modal_content.classList.add('done');
 
       const headerContainer = elements.basic('div', 'header-container');
         const leftContainer = elements.basic('div', 'left');
@@ -192,9 +193,11 @@ const render = (function() {
           complete.addEventListener('click', (e) => {
             if(e.target.classList.contains('done')) {
               e.target.classList.remove('done');
+              document.querySelector('.modal-content').classList.remove('done');
               db.update_item(task.uid, {complete : false});
             } else {
               e.target.classList.add('done');
+              document.querySelector('.modal-content').classList.add('done');
               db.update_item(task.uid, {complete : true});
             }
           })
@@ -314,17 +317,20 @@ const render = (function() {
       name.placeholder = 'new task!';
       form.appendChild(name);
 
+      const controls = elements.basic('div', 'controls-container');
+
       const submit = elements.basic('input', 'submit-task,content-button');
       submit.type = 'button';
       submit.dataset.uid = parent_uid;
       submit.value = 'save';
-      form.appendChild(submit);
+      controls.appendChild(submit);
 
       const cancel = elements.basic('input', 'cancel-task,content-button');
       cancel.type = 'button';
       cancel.value = 'cancel';
-      form.appendChild(cancel);
+      controls.appendChild(cancel);
 
+      form.appendChild(controls);
       container.appendChild(form);
       return container;
     },
