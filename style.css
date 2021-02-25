@@ -210,7 +210,7 @@ body {
 button.new-project, input[type=button], .nav-button, .content-button {
   border-radius: 5px;
   border: none;
-  background-color: transparent; /*#5e9681a5*/
+  background-color: transparent;
   color: var(--bgd5);
   padding: 0px 3px;
   width: max-content;
@@ -419,9 +419,6 @@ h3 {
   font-size: 15px;
   font-weight: 600;
   word-wrap: break-word;
-  /*white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;*/
 }
 
 .task-tile .info-container {
@@ -476,26 +473,26 @@ input.soon {
 /* modal content begins */
 
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  display: none;
+  position: fixed;
+  z-index: 1;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
 }
 
 .modal-content {
   border: 1px solid var(--bgl3);
   background-color: var(--bgl5);
   box-shadow: 0px 2px var(--bgl3);
-  margin: 10% auto; /* 15% from the top and centered */
+  margin: 10% auto;
   padding: 20px;
   border-radius: 5px;
-  width: 60%; /* Could be more or less, depending on screen size */
+  width: 60%;
   max-width: 660px;
 }
 
@@ -549,8 +546,8 @@ textarea.info {
 
 textarea.title:focus, textarea.info:focus{
   outline: none;
-  border-color: var(--p1);
-  box-shadow: 0 0 3px var(--p1);
+  border-color: var(--bg);
+  box-shadow: 0 0 3px var(--bg);
 }
 
 textarea.info {
@@ -582,7 +579,7 @@ textarea.info {
 }
 
 input.due-input {
-  border: 1px solid var(--p4);
+  border: 1px solid var(--bgl4);
   background-color: transparent;
   border-radius: 5px;
   margin-right: 0.5rem;
