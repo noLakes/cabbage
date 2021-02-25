@@ -2,7 +2,6 @@ import { childCount, childCompleteRatio } from './objects';
 import { format, } from 'date-fns'
 import db from './data';
 
-// a basic library for global elements and reusable functions
 const elements = (function() {
   return {
     main : document.querySelector('.main-container'),
@@ -27,7 +26,6 @@ const elements = (function() {
   }
 })()
 
-// a way to render objects into appropriate dom elements
 const render = (function() {
   return {
 

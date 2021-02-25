@@ -2,8 +2,6 @@ import db from './data';
 import { elements, render,} from './dom';
 import time from './time';
 
-// a logic controller for the different ways you might want to render/show the content
-// contains event listeners for interacting with DOM elements
 const controller = (function() {
 
   const clearActive = () => {
@@ -245,7 +243,6 @@ const controller = (function() {
     document.querySelector('.tasks-container').appendChild(render.nothingDisplay());
   }
 
-  // determines which selection of items to pool and load into the content window
   const loadHandler = (target) => {
     if(target.classList.contains('time-link')) {
       switch(target.id) {
@@ -275,8 +272,6 @@ const controller = (function() {
     if(e.target.classList.contains('project-link')) e.target.parentElement.classList.add('active');
     loadHandler(e.target);
   }
-
-  // add event listeners to static items
 
   elements.static_links.forEach(link => {
     link.addEventListener("click", activate);
