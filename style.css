@@ -155,8 +155,10 @@ body {
 
 .nav-container {
   display: flex;
+  position: fixed;
   flex-direction: column;
   width: 180px;
+  height: 100%;
   max-width: 180px;
   min-width: 180px;
   padding: 0 1rem;
@@ -284,6 +286,7 @@ input.project-name:focus {
 
 .content-container {
   display: flex;
+  margin-left: 180px;
   flex-direction: column;
   flex-wrap: wrap;
   width: 100%;
@@ -360,14 +363,10 @@ a.edit-project:hover {
 }
 
 .tasks-container {
-  /*display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-auto-rows: 80px;
-  gap: 10px 10px;*/
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding: 1rem 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-auto-rows: minmax(65px, max-content);
+  gap: 10px 10px;
 }
 
 .nothing {
@@ -376,13 +375,11 @@ a.edit-project:hover {
 }
 
 .task-tile, .new-task-tile {
-  display: flex;
-  flex-direction: column;
-  margin: 5px;
-  width: 20%;
-  max-width: 256px;
+  /*margin: 5px;*/
+  /*width: 100%;*/
+  /*max-width: 256px;*/
   height: 100%;
-  max-height: 65px;
+  /*max-height: 65px;*/
   padding: 0.6rem;
   border: 1px solid var(--bgl3);
   background-color: var(--bgl5);
@@ -425,9 +422,10 @@ h2 {
 h3 {
   font-size: 15px;
   font-weight: 600;
-  white-space: nowrap;
+  word-wrap: break-word;
+  /*white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis;*/
 }
 
 .task-tile .info-container {
@@ -498,10 +496,11 @@ input.soon {
   border: 1px solid var(--bgl3);
   background-color: var(--bgl5);
   box-shadow: 0px 2px var(--bgl3);
-  margin: 15% auto; /* 15% from the top and centered */
+  margin: 10% auto; /* 15% from the top and centered */
   padding: 20px;
   border-radius: 5px;
-  width: 512px; /* Could be more or less, depending on screen size */
+  width: 60%; /* Could be more or less, depending on screen size */
+  max-width: 660px;
 }
 
 .modal-content.done {
@@ -715,4 +714,39 @@ button.done {
   background-color: var(--good);
   color: var(--bgl5);
   border: 1px solid var(--bgl5);
+}
+
+@media only screen and (max-width: 1355px) {
+  .tasks-container {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media only screen and (max-width: 1125px) {
+  .tasks-container {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .modal-content {
+    width: 75%;
+    max-width: 660px;
+  }
+}
+
+@media only screen and (max-width: 890px) {
+  .tasks-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .tasks-container {
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: minmax(80px, max-content);
+  }
+
+  .modal-content {
+    width: 80%;
+    max-width: 660px;
+  }
 }
