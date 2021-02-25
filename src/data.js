@@ -1,4 +1,4 @@
-import { Project, Task, Check, childCount } from './objects';
+import { Project, Task, Check } from './objects';
 import { format, } from 'date-fns'
 
 const db = (function() {
@@ -22,7 +22,6 @@ const db = (function() {
   const load = () => {
     if(localStorage['cabbage_db']) {
       cabbage_db = JSON.parse(localStorage['cabbage_db']);
-      console.log('db loaded');
       return true;
     } else {
       return false;
@@ -33,7 +32,6 @@ const db = (function() {
     if(!load()) {
       cabbage_db = newDb();
       save();
-      console.log('new db initialized');
     }
   }
 
@@ -118,8 +116,8 @@ const db = (function() {
     save();
   }
 
-  const add_task = (parent_uid, name, info, due) => {
-    const task = Project(name, info, due);
+  const add_task = (parent_uid, name, info, due=0) => {
+    const task = Task(name, info, due);
     const parent = fetch(parent_uid);
     task.uid = merge_uid(parent.uid, request_uid('task'));
     insert(parent, task);

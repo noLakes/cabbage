@@ -1,4 +1,4 @@
-import { Project, Task, Check, childCount, childCompleteRatio } from './objects';
+import { childCount, childCompleteRatio } from './objects';
 import { format, } from 'date-fns'
 import db from './data';
 
@@ -105,6 +105,7 @@ const render = (function() {
         edit.addEventListener('click', () => {
           checkContainer.parentElement.insertBefore(this.check_form(check), checkContainer);
           checkContainer.style.display = 'none';
+          document.querySelector('input.name-input').focus();
         })
         
         const del = elements.basic('a', 'delete-check,content-button');
