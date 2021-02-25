@@ -130,7 +130,6 @@ const db = (function() {
     insert(parent, check);
   }
 
-  // needs to be tested further once DOM event listeners begin calling it
   const update_item = (uid, params) => {
     const item = fetch(uid);
     for(const key in params) {
@@ -155,7 +154,6 @@ const db = (function() {
   }
 
 
-  //for testing
   const fetch_raw = () => {
     return cabbage_db;
   }
