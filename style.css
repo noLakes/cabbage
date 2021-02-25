@@ -143,10 +143,6 @@ select {
   font-family: Ubuntu, Helvetica, sans-serif, Arial;
 }
 
-body {
-  background-color: var(--p4);
-}
-
 .main-container {
   display: flex;
   width: 100%;
